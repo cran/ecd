@@ -6,6 +6,7 @@
 #' @param conf_file file name fof symbol config, default to conf/ecld-fit-conf.yml
 #' @param conf_data optionally feed config through a list.
 #'                  If this is not null, this takes priority and \code{conf_file} will be ignored.
+#' @param extdata_dir optionally specify user's own extdata folder
 #' @param ecop an ecop object with conf
 #' @param df dataframe of a single closing date and time to maturity
 #' @param otype option type
@@ -29,7 +30,8 @@
 ### <======================================================================>
 "ecop.from_symbol_conf" <- function(key,
                                     conf_file = "conf/ecop-fit-conf.yml",
-                                    conf_data=NULL)
+                                    conf_data=NULL,
+                                    extdata_dir=NULL)
 {
     # read the conf data
     conf <- NULL
@@ -74,7 +76,7 @@
         symbol = conf$symbol,
         datadate = as.Date(conf$datadate),
         days = conf$days,
-        ttm = conf$ttm2[1] / conf$ttm2[2],
+        ttm = as.numeric(conf$ttm2[1]) / as.numeric(conf$ttm2[2]),
         int_rate = conf$int_rate,
         div_yield = conf$div_yield,
         put_conf = put_conf,
@@ -84,9 +86,18 @@
     )
     # option data
     Date = days = NULL # Simply to avoid R CMD check complaining
-    df <- ecop.read_csv_by_symbol(op@symbol)
+    df <- ecop.read_csv_by_symbol(op@symbol, extdata_dir=extdata_dir)
     df2 <- subset(df, Date == op@datadate & days == op@days )
     df2$diff <- df2$STRK_PRC - df2$UNDL_PRC
+    if (nrow(df2)==0) {
+        stop(paste("data frame doesn't have data. key:", key,
+                   "sysmbol:", op@symbol,
+                   "conf_file:", conf_file,
+                   "extdata_dir:", extdata_dir))
+    }
+    if(!("IVOL" %in% colnames(df2))) {
+        df2[,c("IVOL")] <- NaN
+    }
     
     if (length(names(call_conf)) > 0) {
         op@call_data <- ecop.build_opt(op, df2, otype="c")
@@ -142,6 +153,7 @@
         mu_D <- ecld.mu_D(ld0)
         mu <- mu_D + ldc$mu_plus
         ld <- ecld(lambda=ldc$lambda, sigma=ldc$sigma, beta=ldc$beta, mu=mu, is.sged=is.sged)
+        ld@mu_D <- mu_D
     }
     if ("ecdr" %in% names(conf)) {
         ldc <- conf$ecdr
@@ -177,7 +189,8 @@
         V_last = df2$LAST,
         V_bid = df2$L_BID,
         V_ask = df2$L_ASK,
-        V = df2$L_ASK/2 + df2$L_BID/2
+        V = df2$L_ASK/2 + df2$L_BID/2,
+        IV = df2$IVOL
     )
     opt
 }

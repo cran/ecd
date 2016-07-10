@@ -21,7 +21,8 @@ for local regime. Default is \code{Inf}, use the incomplete gamma.
 When it is \code{NaN}, \code{L*} value is suppressed.}
 
 \item{order.global}{numeric, order of the hypergeometric series to be computed
-for global regime. Default is \code{Inf}, use the incomplete gamma.}
+for global regime. Default is \code{Inf}, use the incomplete gamma.
+If \code{NaN}, then revert to OGF.}
 
 \item{ignore.mu}{logical, ignore \code{exp(mu)} on both sides, default is \code{FALSE}.}
 }
@@ -31,7 +32,6 @@ The state price of option in star OGF terms.
 }
 \description{
 Calculate implied volatility using star OGF and small sigma formula.
-Only the postive ki and Lc is supported.
 SGED is not supported yet.
 }
 \examples{

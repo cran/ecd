@@ -1,22 +1,24 @@
 Package: ecd
 Type: Package
-Title: Elliptic Distribution Based on Elliptic Curves
-Version: 0.6.4
-Date: 2015-12-23
+Title: Elliptic Distribution and Lambda Option Pricing Model
+Version: 0.8.2
+Date: 2016-07-09
 Authors@R: person(given = c("Stephen", "H-T."), family = "Lihn",
                   email = "stevelihn@gmail.com", role = c("aut", "cre"))
 Author: Stephen H-T. Lihn [aut, cre]
 Maintainer: Stephen H-T. Lihn <stevelihn@gmail.com>
-Description: An implementation of the univariate elliptic distribution
-    and elliptic option pricing model. It provides detailed functionality
-    and data sets for the distribution and modelling.
-    Especially, it contains functions for the computation of
-    density, probability, quantile, fitting procedures, option prices,
-    volatility smile. It also comes with sample financial data, and plotting routines.
+Description: An implementation of the univariate elliptic distribution, and
+    lambda option pricing model. It provides detailed functionality and data
+    sets for the distribution and modelling. Especially, it contains functions
+    for the computation of density, probability, quantile, fitting procedures,
+    option prices, volatility smile. It also comes with sample financial data,
+    and plotting routines.
+URL: http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2707810
 Depends: R (>= 3.1.2)
-Imports: stats, Rmpfr, polynom, xts, zoo, optimx, moments, parallel,
-        graphics, methods, yaml, RSQLite
-Suggests: knitr, testthat, roxygen2, ghyp, fOptions
+Imports: stats, utils, Rmpfr (>= 0.6-0), gsl, polynom, xts, zoo,
+        optimx, moments, parallel, graphics, methods, yaml, RSQLite (<=
+        1.0.0), digest
+Suggests: knitr, testthat, roxygen2, ghyp, fOptions, shape
 License: Artistic-2.0
 Encoding: latin1
 LazyData: true
@@ -30,14 +32,14 @@ Collate: 'ecd-adj-gamma-method.R' 'ecd-asymp-stats-method.R'
         'ecd-df2ts-method.R' 'ecd-discr-generic.R'
         'ecd-distribution-method.R' 'ecld-class.R'
         'ecd-ecldOrEcd-class.R' 'ecd-ellipticity-generic.R'
-        'ecd-estimate-const-method.R' 'ecd-fit-data-method.R'
-        'ecd-fit-ts-conf-method.R' 'ecd-has-quantile-method.R'
-        'ecd-imgf-method.R' 'ecd-integrate-method.R'
-        'ecd-integrate-pdf-generic.R' 'ecd-is-numericMpfr-internal.R'
-        'ecd-jinv-generic.R' 'ecd-lag-method.R'
-        'ecd-manage-hist-tails-method.R' 'ecd-max-kurtosis-method.R'
-        'ecd-model-internal.R' 'ecd-moment-generic.R'
-        'ecd-mp2f-method.R' 'ecd-mpfr-method.R'
+        'ecd-erfq-method.R' 'ecd-estimate-const-method.R'
+        'ecd-fit-data-method.R' 'ecd-fit-ts-conf-method.R'
+        'ecd-has-quantile-method.R' 'ecd-imgf-method.R'
+        'ecd-integrate-method.R' 'ecd-integrate-pdf-generic.R'
+        'ecd-is-numericMpfr-internal.R' 'ecd-jinv-generic.R'
+        'ecd-lag-method.R' 'ecd-manage-hist-tails-method.R'
+        'ecd-max-kurtosis-method.R' 'ecd-model-internal.R'
+        'ecd-moment-generic.R' 'ecd-mp2f-method.R' 'ecd-mpfr-method.R'
         'ecd-mpfr-qagi-method.R' 'ecd-mpnum-method.R'
         'ecd-ogf-method.R' 'ecd-pdf-method.R' 'ecd-plot-2x2-generic.R'
         'ecd-polar-constructor.R' 'ecd-quantilize-generic.R'
@@ -65,12 +67,16 @@ Collate: 'ecd-adj-gamma-method.R' 'ecd-asymp-stats-method.R'
         'ecld-ogf-star-method.R' 'ecld-op-V-method.R'
         'ecld-pdf-method.R' 'ecld-sd-method.R' 'ecld-sged-method.R'
         'ecld-solve-method.R' 'ecld-y-slope-method.R'
+        'ecld.quartic-Qp-method.R' 'ecld.quartic-RN0-method.R'
+        'ecld.quartic_Qp_atm_attr.R'
         'ecop-bs-implied-volatility-method.R'
         'ecop-bs-option-price-method.R' 'ecop-opt-class.R'
         'ecop-class.R' 'ecop-constructor.R' 'ecop-plot-option-method.R'
         'ecop-polyfit-option-method.R' 'ecop-read-csv-by-symbol.R'
+        'ecop-term-master-calculator-method.R'
+        'ecop-term-plot-3x3-method.R'
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-01-04 15:59:06 UTC; hornik
+Packaged: 2016-07-10 03:07:22 UTC; slihn
 Repository: CRAN
-Date/Publication: 2016-01-04 17:05:41
+Date/Publication: 2016-07-10 16:58:53

@@ -5,7 +5,7 @@
 \title{Uniroot wrapper}
 \usage{
 ecd.uniroot(f, lower, upper, use.mpfr = FALSE,
-  tol = .Machine$double.eps^0.25, maxiter = 1000)
+  tol = .Machine$double.eps^0.25, maxiter = 100)
 }
 \arguments{
 \item{f}{the function for which the root is sought.}

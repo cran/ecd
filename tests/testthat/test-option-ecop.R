@@ -61,3 +61,88 @@ test_that("test asymptotic formula for lambda=1 OGF star",{
     
     expect_true(max(abs(L1/L2-1)) < eps)
 })
+
+
+# ------------------------------------------------------
+x <- seq(4.7, 15, length.out=100)*ecd.mp1
+erf2 <- function(x,sgn) 1/x*(1+sgn/2/x^2) # first two terms
+
+test_that("test erfq(x,1) vs erfq_sum",{
+    y1 <- ecd.erfq(x,1) -erf2(x,1)
+    z1 <- ecd.erfq_sum(x,1) -erf2(x,1)
+    p1 <- ecd.erfcx(x)*sqrt(pi) -erf2(x,1)
+    err1 = max(abs((y1/z1-1)*1e8))
+    err2 = max(abs((y1/p1-1)*1e8))
+    expect_true(err1 < 1 & err2 < 1)
+})
+test_that("test erfq(x,-1) vs erfq_sum",{
+    y2 <- ecd.erfq(x,-1) -erf2(x,-1)
+    z2 <- ecd.erfq_sum(x,-1) -erf2(x,-1)
+    p2 <- ecd.erfi(x)*exp(-x^2)*sqrt(pi) -erf2(x,-1)
+    err1 = max(abs((y2/z2-1)*1e8))
+    err2 = max(abs((y2/p2-1)*1e8))
+    expect_true(err1 < 1 & err2 < 1)
+})
+
+test_that("test erfq(x,+/-1) vs erfi/c",{
+    y1 <- ecd.erfq(x,-1)
+    y2 <- sqrt(pi)*exp(-x^2)*ecd.erfi(x)
+    z1 <- ecd.erfq(x,1)
+    z2 <- sqrt(pi)*exp(x^2)*ecd.erfc(x)
+    err1 = max(abs(y2/y1-1))
+    err2 = max(abs(z2/z1-1))
+    expect_true(err1 < eps & err2 < eps)
+})
+
+test_that("test quartic mu_D",{
+    z = 5
+    sigma <- (1/2/z)^2
+    ld <- ecld(lambda=4, sigma=sigma)
+    y1 <- ecld.mu_D_quartic(ld)
+    y2 <- ecld.mu_D(ld)
+    y3 <- -log(ecld.mgf_quartic(ld))
+    y4 <- -log(ecld.mgf(ld))
+    err2 = max(abs(y2/y1-1))
+    err3 = max(abs(y3/y1-1))
+    err4 = max(abs(y4/y1-1))
+    expect_true(err2 < eps & err3 < eps & err4 < eps)
+})
+# ------------------------------------------------------
+# small sigma limit for quartic model
+
+ld <- ecld.quartic(sigma=0.001*ecd.mp1, rho=0, epsilon=0, mu_plus=0)
+atm_ki <- ecld.quartic_Qp_atm_ki(ld)
+
+test_that("test quartic ATM vol location at small sigma",{
+    Qp <- ecld.quartic_Qp(ld,atm_ki)
+    err1 = abs(-11.58/atm_ki-1)
+    err2 = abs(sqrt(240)/Qp-1)
+    expect_true(err1 < eps & err2 < eps)
+})
+test_that("test quartic ATM skew at small sigma",{
+    S <- ecld.quartic_Qp_atm_skew(ld)
+    S2 <- ecld.quartic_Qp_skew(ld, atm_ki)
+    err1 = abs(-0.4465/S-1)
+    err2 = abs(S2/S-1)
+    expect_true(err1 < eps & err2 < eps)
+})
+
+test_that("test quartic ATM vol location at sigma=0",{
+    atm_ki <- ecld.quartic_SN0_atm_ki()
+    rho_stdev <- ecld.quartic_SN0_rho_stdev()
+    err1 = abs(-11.48/atm_ki-1)
+    err2 = abs(1.048/rho_stdev-1)
+    expect_true(err1 < eps & err2 < eps)
+})
+test_that("test quartic ATM skew at small sigma",{
+    S <- ecld.quartic_SN0_skew()
+    err = abs(-0.4495/S-1)
+    expect_true(err < eps)
+})
+test_that("test quartic max RNV at sigma=0",{
+    S <- ecld.quartic_SN0_max_RNV()
+    err = abs(0.2962/S-1)
+    expect_true(err < eps)
+})
+
+# ------------------------------------------------------

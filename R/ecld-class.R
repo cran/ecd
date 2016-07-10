@@ -17,7 +17,10 @@
 #'                is mpfr, then this flag is set to \code{TRUE}.
 #' @slot is.sged logical, if \code{TRUE}, interpret parameters as SGED.
 #' @slot ecd     the companion object of ecd class (optional)
-#' @slot mu_D    the risk-neutral drift (optional)
+#' @slot mu_D    the risk-neutral drift, optional, but preferred to have value
+#'               if the object is to engage with OGF calculation.
+#' @slot epsilon the residual risk, optional as a storage for lambda transformation
+#' @slot rho     the momentum shift, optional as a storage for lambda transformation
 #' @slot ecd_RN  the risk-neutral companion object of ecd class (optional)
 #' @slot status  numeric, bitmap recording the state of the calculation layers.
 #'               1: bare bone; 2: ecd; 4: mu_D; 8: ecd_RN
@@ -38,6 +41,8 @@ setClass("ecld",
                         is.sged = "logical",
                         ecd = "ecd",
                         mu_D = "numericMpfr",
+                        epsilon = "numericMpfr",
+                        rho = "numericMpfr",
                         ecd_RN = "ecd",
                         status = "numeric"),
           prototype(call = call("ecld"),
@@ -49,6 +54,8 @@ setClass("ecld",
                     is.sged = FALSE,
                     ecd = NULL,
                     mu_D = NaN,
+                    epsilon = NaN,
+                    rho = NaN,
                     ecd_RN = NULL,
                     status = 0)
 )

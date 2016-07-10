@@ -6,9 +6,12 @@
 \alias{ecld.ogf_imnt_sum}
 \alias{ecld.ogf_integrate}
 \alias{ecld.ogf_log_slope}
+\alias{ecld.ogf_quartic}
 \title{Option generating function (OGF) of ecld}
 \usage{
 ecld.ogf(object, k, otype = "c", RN = TRUE)
+
+ecld.ogf_quartic(object, k, otype = "c", RN = TRUE)
 
 ecld.ogf_integrate(object, k, otype = "c", RN = TRUE)
 
@@ -36,7 +39,8 @@ The state price of option
 \description{
 The analytic solutions for OGF of ecld, if available.
 Note that, by default, risk neutrality is honored. However, you must note that
-when fitting market data, this is usually not true.
+when fitting market data, this is usually not true. It is also more preferable
+that input object already contains mu_D. It is more consistent and saves time.
 }
 \examples{
 ld <- ecld(sigma=0.01*ecd.mp1)

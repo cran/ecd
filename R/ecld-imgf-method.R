@@ -19,6 +19,7 @@
 #'
 #' @export ecld.imgf
 #' @export ecld.imgf_gamma
+#' @export ecld.imgf_quartic
 #' @export ecld.imgf_integrate
 #'
 #' @examples
@@ -33,13 +34,14 @@
     }
 
     ecld.validate(object, sged.allowed=TRUE)
+    if (is.na(object@mu_D)) object@mu_D <- ecld.mu_D(object)
     one <- if(object@use.mpfr) ecd.mp1 else 1 # for gamma function
     
     lambda <- object@lambda * one
     s <- object@sigma * one
     b <- object@beta
     
-    mu <- if (RN) ecld.mu_D(object) else object@mu
+    mu <- if (RN) object@mu_D else object@mu
     M1 <- if (RN) 1 else ecld.mgf(object)
     
     # SGED
@@ -96,9 +98,8 @@
         }
     }
 
-    ki <- (k-mu)/s
-	
     if (lambda==2) {
+        ki <- (k-mu)/s
         sgn <- ifelse(ki<0, -1, 1) # sign of k
 	    B0 <- ecld.laplace_B(b, 0)
 	    Bs <- ecld.laplace_B(b, -sgn, s) # sigma extension
@@ -110,13 +111,66 @@
 	    if (otype=="c") return(ecd.mpnum(object, Mc))
 	    if (otype=="p") return(ecd.mpnum(object, Mp))
 	}
-	
+
+    # TODO This remains turned off. Need more testing on numerical accuracy
+    # espcially for small sigma, e.g. 0.001
+    if (lambda==4 & b==0 & 1==0) {
+        m <- ecld.imgf_quartic(object, k, otype=otype, RN=RN)
+        return(m)
+    }
+    
     # The remaining parametrization must integrate directly
     m <- ecld.imgf_integrate(object, k, otype=otype, RN=RN)
     return(m)
     
     stop("Unknown analytic formula for IMGF")
 
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecld.imgf
+"ecld.imgf_quartic" <- function(object, k, otype="c", RN=TRUE)
+{
+    if (!(otype %in% c("c","p"))) {
+        stop(paste("Unknown option type:", otype))
+    }
+    
+    ecld.validate(object, sged.allowed=TRUE)
+    if (is.na(object@mu_D)) object@mu_D <- ecld.mu_D(object)
+    one <- if(object@use.mpfr) ecd.mp1 else 1 # for gamma function
+    
+    stopifnot(object@lambda == 4)
+    stopifnot(object@beta == 0)
+    
+    s <- object@sigma * one
+    
+    mu <- if (RN) object@mu_D else object@mu
+    M1 <- if (RN) 1 else ecld.mgf_quartic(object)
+    
+    ki <- (k-mu)/s
+    
+    ki_inf <- 1/4/s^2
+    ki <- ecld.ifelse(object, ki>ki_inf, ki_inf, ki)
+
+    z = 1/2/sqrt(s)
+    dz = z^2*exp(-z^2)
+
+    V <- function(sgn) sqrt(abs(ki)) + sgn*abs(ki)*s
+    W <- function(sgn) 1/2/sqrt(s) + sgn*sqrt(abs(ki)*s) 
+    TH <- sqrt(pi)/(8*s^(3/2))
+    B <- exp(1/4/s)
+    
+    Ms <- function(sgn) exp(-V(sgn))*(z^3*ecd.erfq(W(sgn),sgn)-z^2)
+    
+    Mc_pls <- exp(mu) * ecd.ifelse(object, ki>=0, Ms(-1)+dz, NaN)
+    Mp_neg <- exp(mu) * ecd.ifelse(object, ki<0,  Ms(1), NaN)
+    
+    Mc <- ifelse(ki>=0, Mc_pls, M1-Mp_neg)
+    Mp <- ifelse(ki<0,  Mp_neg, M1-Mc_pls)
+    if (otype=="c") return(ecd.mpnum(object, Mc))
+    if (otype=="p") return(ecd.mpnum(object, Mp))
+
+    stop("Unknown analytic formula for IMGF")
+    
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecld.imgf
@@ -127,13 +181,14 @@
     }
     
     ecld.validate(object, sged.allowed=TRUE)
+    if (is.na(object@mu_D)) object@mu_D <- ecld.mu_D(object)
     one <- if(object@use.mpfr) ecd.mp1 else 1 # for gamma function
     
     lambda <- object@lambda * one
     s <- object@sigma * one
     b <- object@beta
     
-    mu <- if (RN) ecld.mu_D(object) else object@mu
+    mu <- if (RN) object@mu_D else object@mu
     M1 <- if (RN) 1 else ecld.mgf(object)
     
     ki <- (k-mu)/s
@@ -171,6 +226,7 @@
     }
     
     order <- if (object@is.sged) ecld.mgf_trunc(object) else ecld.y_slope_trunc(object)
+    order <- ecd.mp2f(order)
     if (order > 100) order <- 100
     
     k2 <- abs(ki)^(2/lambda)
@@ -203,13 +259,14 @@
     }
     
     ecld.validate(object, sged.allowed=TRUE)
+    if (is.na(object@mu_D)) object@mu_D <- ecld.mu_D(object)
     one <- if(object@use.mpfr) ecd.mp1 else 1 # for gamma function
     
     lambda <- object@lambda * one
     s <- object@sigma * one
     b <- object@beta
     
-    mu <- if (RN) ecld.mu_D(object) else object@mu
+    mu <- if (RN) object@mu_D else object@mu
     M1 <- if (RN) 1 else ecld.mgf(object)
     ki <- (k-mu)/s
     

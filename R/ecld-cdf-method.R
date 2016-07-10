@@ -65,7 +65,13 @@
 	    q <- 1/2*(1-ecd.erf(abs(xi)^(1/3)))
 	    return(ecd.mpnum(object, ifelse(xi<0, p+q, 1-p-q)))
 	}
-    
+
+    if (lambda==4 & b==0) {
+        xi2 <- sqrt(abs(xi))
+        p <- 1/2 *(1+xi2) *exp(-xi2)
+        return(ecd.mpnum(object, ifelse(xi<0, p, 1-p)))
+    }
+
     # for all other sym distributions
     if (b==0) {
         return(ecld.cdf_gamma(object, x))

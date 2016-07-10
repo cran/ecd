@@ -18,7 +18,7 @@ ecld.mgf_trunc_max_sigma(object, order = 1)
 \arguments{
 \item{object}{an object of ecd class}
 
-\item{order}{numeric. Order of the term (moment)}
+\item{order}{numeric. Order of the term (moment). Order can be a vector.}
 
 \item{t}{numeric, for MGF}
 }

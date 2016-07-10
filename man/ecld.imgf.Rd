@@ -4,9 +4,12 @@
 \alias{ecld.imgf}
 \alias{ecld.imgf_gamma}
 \alias{ecld.imgf_integrate}
+\alias{ecld.imgf_quartic}
 \title{Incomplete moment generating function (IMGF) of ecld}
 \usage{
 ecld.imgf(object, k, otype = "c", RN = TRUE)
+
+ecld.imgf_quartic(object, k, otype = "c", RN = TRUE)
 
 ecld.imgf_gamma(object, k, otype = "c", RN = TRUE)
 

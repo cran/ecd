@@ -2,10 +2,16 @@
 % Please edit documentation in R/ecd-mpfr-method.R
 \docType{data}
 \name{ecd.mpfr}
+\alias{ecd.dawson}
 \alias{ecd.devel}
 \alias{ecd.erf}
+\alias{ecd.erfc}
+\alias{ecd.erfcx}
+\alias{ecd.erfi}
+\alias{ecd.gamma}
 \alias{ecd.mp1}
 \alias{ecd.mpfr}
+\alias{ecd.mppi}
 \title{Wrapper to convert numeric to mpfr}
 \format{An object of class \code{mpfr} of length 1.}
 \usage{
@@ -13,7 +19,19 @@ ecd.mpfr(x, precBits = getOption("ecd.precBits"))
 
 ecd.mp1
 
+ecd.mppi(precBits = getOption("ecd.precBits"))
+
+ecd.gamma(s, x, na.stop = TRUE)
+
 ecd.erf(x)
+
+ecd.erfc(x)
+
+ecd.erfcx(x)
+
+ecd.dawson(x)
+
+ecd.erfi(x)
 
 ecd.devel()
 }
@@ -23,6 +41,10 @@ it will be passed through.}
 
 \item{precBits}{an integer for mpfr precBits.
 Default is from \code{getOption("ecd.precBits")}.}
+
+\item{s}{numeric vector, for the order of incomplete gamma function}
+
+\item{na.stop}{logical, stop if NaN is generated. The default is \code{TRUE}.}
 }
 \value{
 The \code{mpfr} object
@@ -30,13 +52,19 @@ The \code{mpfr} object
 \description{
 Convert numeric to mpfr for ecd calculations.
 \code{ecd.mp1} is the constant 1 wrapped in mpfr class.
+\code{ecd.mppi} is the function to obtain pi from Rmpfr with an optional precision. This is used to implement \code{ecd.erfq}.
+\code{ecd.gamma} is a wrapper on \code{ecld.gamma}, which is the incomplete gamma function.
 \code{ecd.erf} is a wrapper on \code{Rmpfr::erf}.
+\code{ecd.erfc} is a wrapper on \code{Rmpfr::erfc}, which is used to implement \code{ecd.erfq}.
+\code{ecd.dawson} is a wrapper on \code{gsl::dawson}. Dawson function is used to implement \code{ecd.erfq}.
+\code{ecd.erfi} is the imaginary scaled error function, which is implemented through \code{ecd.dawson}.
 \code{ecd.devel} is a developer tool to size down intensive mpfr tests for CRAN. Set \code{ecd_devel} in R options or OS env to change its value.
 }
 \examples{
 x <- ecd.mpfr(1)
 y <- ecd.mpfr(c(1,2,3))
 z <- ecd.mp1
+p <- ecd.mppi()
 }
 \keyword{datasets}
 \keyword{utility}

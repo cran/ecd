@@ -23,7 +23,7 @@
 #'
 ### <======================================================================>
 "ecd.uniroot" <- function(f, lower, upper, use.mpfr = FALSE,
-                          tol = .Machine$double.eps^0.25, maxiter = 1000)
+                          tol = .Machine$double.eps^0.25, maxiter = 100)
 {
     if (use.mpfr) {
         rt <- Rmpfr::unirootR(f, lower=lower, upper=upper,

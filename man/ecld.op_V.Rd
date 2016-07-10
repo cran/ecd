@@ -4,45 +4,62 @@
 \alias{ecld.op_O}
 \alias{ecld.op_U_lag}
 \alias{ecld.op_V}
+\alias{ecld.op_VL_quartic}
 \title{The O, V, U operators in option pricing model}
 \usage{
-ecld.op_V(L, k, otype = "c", stop.on.na = FALSE, use.mc = TRUE)
+ecld.op_V(L, k, otype = "c", ttm = NaN, stop.on.na = FALSE,
+  use.mc = TRUE)
 
 ecld.op_O(sigma1, k, otype = "c")
 
 ecld.op_U_lag(L, k, sd, n = 2)
+
+ecld.op_VL_quartic(object, k, otype = "c", ttm = NaN, stop.on.na = FALSE,
+  use.mc = TRUE)
 }
 \arguments{
-\item{L}{a vector of option state prices}
+\item{L}{numeric, a vector of normalized local option prices}
 
-\item{k}{a numeric vector of log-strike}
+\item{k}{numeric, a vector of log-strike}
 
 \item{otype}{character, specifying option type:
 \code{c} (default) or \code{p}.}
 
+\item{ttm}{numeric, time to expiration (maturity), measured by fraction of year.
+If specified, V operator will adjust \eqn{\sigma_1(k)} to Black-Scholes implied volatility.
+Default is NaN.}
+
 \item{stop.on.na}{logical, to stop if fails to find solution.
 Default is to use NaN and not stop.}
 
-\item{use.mc}{logical, to use mclapply (default), or else just use for loop.
+\item{use.mc}{logical, to use mclapply, or else just use for loop.
+Default is \code{TRUE}.
 For loop option is typically for debugging.}
 
-\item{sigma1}{a vector of implied volatility (without T)}
+\item{sigma1}{numeric, a vector of implied volatility (without T)}
 
 \item{sd}{numeric, the stdev of the distribution.
 Instead, if an ecld or ecd object is provided,
 the stdev will be calculated from it.}
 
 \item{n}{numeric, number of lags in \code{ecld.op_U_lag}.}
+
+\item{object}{an object of ecld class created from \code{ecld.quartic}.
+This object contains the full quartic lambda model spec in order
+to be used in \code{ecld.op_VL_quartic}}
 }
 \value{
 a numeric vector
 }
 \description{
 The O operator takes a vector of implied volatility \eqn{\sigma_1(k)}
-and transforms them to a vector of option state prices.
-The V operator takes a vector of option state prices and transforms
+and transforms them to a vector of normalized option prices.
+The V operator takes a vector of normalized option prices and transforms
 them to a vector of implied volatility \eqn{\sigma_1(k)}.
+If \code{ttm} is provided, \eqn{\sigma_1(k)} will be divided by square root of \code{2 ttm} and yield Black-Scholes implied volatility.
 The U operator calculates the log-slope of the option prices.
+The op_VL_quartic operator is the quartic composite of V x OGF, assuming epsilon and rho are deposited in the ecld object.
+The \code{RN} parameter for OGF is not available here. It is always assumed to be \code{FALSE}.
 }
 \author{
 Stephen H. Lihn

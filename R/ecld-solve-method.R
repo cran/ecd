@@ -22,6 +22,9 @@
 #'
 #' @export ecld.solve
 #' @export ecld.laplace_B
+#' @export ecld.solve_quartic
+#' @export ecld.solve_by_poly
+#' @export ecld.solve_isomorphic
 #'
 #' @examples
 #' ld <- ecld(sigma=0.01*ecd.mp1)
@@ -98,7 +101,10 @@
         }
         return(y)
     }
-	if (lambda > 2 & lambda != 3 & beta != 0) {
+    if (lambda==4 & beta != 0) {
+        return(ecld.solve_quartic(a, b))
+    }
+    if (lambda > 2 & lambda != 3 & lambda != 4 & beta != 0) {
 	    # enroute solve.ecd of unit distribution
 	    d0 <- ecd(lambda=ecd.mp2f(lambda), beta=ecd.mp2f(beta), bare.bone=TRUE)
 	    return(solve(d0,xi))
@@ -118,3 +124,101 @@ ecld.laplace_B <- function(beta, sgn=0, sigma=0) {
 	B0 <- sqrt(1+beta^2/4)
 	return(B0 + sgn*beta/2 + sgn*sigma)
 }
+### <---------------------------------------------------------------------->
+#' @rdname ecld.solve
+ecld.solve_quartic <- function (a, b, ...) {
+
+    stopifnot(a@lambda==4)
+    xi <- ecd.mp2f((b-a@mu)/a@sigma)
+    beta <- ecd.mp2f(a@beta)
+
+    # quartic polynomial with 2 real roots and 2 complex roots
+    get_real <- function(roots) {
+        real_roots <- roots[abs(Im(roots)) == 0]
+        y <- min(Re(real_roots))
+        stopifnot(y <= 0)
+        y
+    }
+    
+    f <- function(x) {
+        q <- polynom::polynomial(c(-x^2, -beta*x, 0, 0, 1))
+        get_real(solve(q))
+    }
+    return(sapply(xi,f))
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecld.solve
+ecld.solve_by_poly <- function(a, b, ...) {
+    
+    eps <- 1e-7
+    
+    get_real <- function(roots) {
+        real_roots <- roots[abs(Im(roots)) <= eps]
+        min(Re(real_roots))
+    }
+
+
+    mn <- ecd.rational(a@lambda)
+    m <- mn[1]
+    n <- mn[2]
+    y_m <- polynom::polynomial(c(rep(0,m), (-1)^m))
+    
+    f <- function(x) {
+        xi <- (x-a@mu)/a@sigma
+        skew <- polynom::polynomial(c(xi^2, a@beta*xi))
+        solve(y_m - skew^n)
+    }
+    all_roots <- lapply(b, f)
+    real_roots <- simplify2array(lapply(all_roots, get_real))
+    return(real_roots)
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecld.solve
+ecld.solve_isomorphic <- function(a, b, ...) {
+    
+    lambda = ecd.mp2f(a@lambda)
+    beta = ecd.mp2f(a@beta)
+    
+    get_root <- function(xi) {
+        
+        if (any(xi==0)) return(0)
+        
+        beta2 = sign(xi)*beta*abs(xi)^(2/lambda-1)
+        
+        g <- function(y2) {
+            abs(-y2)^lambda - beta2*y2 - 1
+        }
+
+        upper <- 0
+        lower <- -1
+        if (beta2 < 0) {
+            if(g(-1) < 0) upper <- -1
+            lower <- -2
+            if (beta2 <= -4) {
+                lower2 <- -abs(beta2)^(1/(lambda-1))-0.5
+                if (lower2 < lower) lower <- lower2
+            }
+            cnt = 0
+            while(g(lower) < 0) {
+                upper = lower
+                lower = lower*2
+                cnt = cnt + 1
+                stopifnot(cnt < 100)
+            }
+        }
+        rs <- uniroot(g, lower=lower, upper=upper, maxiter=100, tol=1e-6)
+        # we want tol to be higher than the default 1e-4
+        # this produces comparable precision in rational polynomial approach
+
+        y2 <- rs$root
+        y <- y2*abs(xi)^(2/lambda)
+        return(y)
+    }
+    
+    xi <- ecd.mp2f((b-a@mu)/a@sigma)
+    roots <- simplify2array(lapply(xi, get_root))
+    return(roots)
+    
+    
+}
+### <---------------------------------------------------------------------->

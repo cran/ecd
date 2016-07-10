@@ -8,7 +8,7 @@
 #' SGED is supported.
 #'
 #' @param object an object of ecd class
-#' @param order numeric. Order of the term (moment)
+#' @param order numeric. Order of the term (moment). Order can be a vector.
 #' @param t numeric, for MGF
 #'
 #' @return numeric

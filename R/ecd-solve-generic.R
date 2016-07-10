@@ -44,21 +44,12 @@
         if ( a@beta == 0 ) {
 			xi <- (b-a@mu)/a@sigma
 			return(-(xi^2)^(1/a@lambda))
-
 		} else {
-			mn <- ecd.rational(a@lambda)		
-			m <- mn[1]
-			n <- mn[2]
-			y_m <- polynom::polynomial(c(rep(0,m), (-1)^m))		
-
-		    f <- function(x) {
-				xi <- (x-a@mu)/a@sigma
-				skew <- polynom::polynomial(c(xi^2, a@beta*xi))		
-				solve(y_m - skew^n)
-        	}
-    		all_roots <- lapply(b, f)
-        	real_roots <- simplify2array(lapply(all_roots, get_real))
-        	return(real_roots)
+            # this is handling the cases outside of analytic coverage in ecld.solve()
+            # e.g. lambda = 2,4 have already been handled there
+            
+            #return(ecld.solve_by_poly(a,b))
+            return(ecld.solve_isomorphic(a,b))
         }
     }
 

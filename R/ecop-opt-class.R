@@ -19,6 +19,7 @@
 #' @slot V_bid bid option price
 #' @slot V_ask ask option price
 #' @slot V finalized option price (likely mid-point)
+#' @slot IV implied volatility from the vendor
 #'
 #' @include ecd-ecldOrEcd-class.R
 #' @keywords ecop
@@ -42,7 +43,8 @@ setClass("ecop.opt",
                         V_last = "numeric",
                         V_bid = "numeric",
                         V_ask = "numeric",
-                        V = "numeric"
+                        V = "numeric",
+                        IV = "numeric"
                     ),
           prototype(call = call("ecop"),
                     otype = "",
@@ -59,6 +61,7 @@ setClass("ecop.opt",
                     V_last = NaN,
                     V_bid = NaN,
                     V_ask = NaN,
-                    V = NaN)
+                    V = NaN,
+                    IV = NaN)
 )
 ### <---------------------------------------------------------------------->

@@ -7,7 +7,7 @@
 \title{Constructor of ecop class by read conf for option sample data}
 \usage{
 ecop.from_symbol_conf(key, conf_file = "conf/ecop-fit-conf.yml",
-  conf_data = NULL)
+  conf_data = NULL, extdata_dir = NULL)
 
 ecop.read_symbol_conf(key, conf_file = "conf/ecop-fit-conf.yml")
 
@@ -20,6 +20,8 @@ ecop.build_opt(ecop, df, otype)
 
 \item{conf_data}{optionally feed config through a list.
 If this is not null, this takes priority and \code{conf_file} will be ignored.}
+
+\item{extdata_dir}{optionally specify user's own extdata folder}
 
 \item{ecop}{an ecop object with conf}
 

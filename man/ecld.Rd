@@ -3,16 +3,20 @@
 \name{ecld}
 \alias{ecld}
 \alias{ecld.from}
+\alias{ecld.quartic}
 \alias{ecld.validate}
 \title{Constructor of ecld class}
 \usage{
-ecld(lambda = 3, sigma = 1, beta = 0, mu = 0, with.ecd = FALSE,
-  with.mu_D = FALSE, with.RN = FALSE, is.sged = FALSE, verbose = FALSE)
+ecld(lambda = 3, sigma = 1, beta = 0, mu = 0, epsilon = NaN,
+  rho = NaN, with.ecd = FALSE, with.mu_D = FALSE, with.RN = FALSE,
+  is.sged = FALSE, verbose = FALSE)
 
 ecld.from(object, with.ecd = FALSE, with.mu_D = FALSE, with.RN = FALSE,
   verbose = FALSE)
 
 ecld.validate(object, sged.allowed = FALSE, sged.only = FALSE)
+
+ecld.quartic(sigma, epsilon, rho, mu_plus_ratio = NaN, mu_plus = NaN)
 }
 \arguments{
 \item{lambda}{numeric, the lambda parameter. Must be positive. Default: 3.}
@@ -23,9 +27,15 @@ ecld.validate(object, sged.allowed = FALSE, sged.only = FALSE)
 
 \item{mu}{numeric, the location parameter. Default: 0.}
 
+\item{epsilon}{The supplemental residual premium for lambda transformation.
+It is default to NaN in ecld constructor since its meaning is not defined.}
+
+\item{rho}{The supplemental momentum shift for lambda transformation.
+It is default to NaN in ecld constructor since its meaning is not defined.}
+
 \item{with.ecd}{logical, also calculate the ecd object, default is \code{FALSE}.}
 
-\item{with.mu_D}{logical, also calculate the risk-neutral drift, default is \code{FALSE}.
+\item{with.mu_D}{logical, also calculate the ecd risk-neutral drift, default is \code{FALSE}.
 If \code{TRUE}, this flag supercedes \code{with.ecd}.
 Also \code{mu} must set to zero.}
 
@@ -41,6 +51,9 @@ If \code{TRUE}, this flag supercedes \code{with.mu_D}.}
 \item{sged.allowed}{logical, used in \code{ecld.validate} to indicate if the function allows SGED.}
 
 \item{sged.only}{logical, used in \code{ecld.validate} to indicate if the function is only for SGED.}
+
+\item{mu_plus, mu_plus_ratio}{numeric, excess value in addition to \code{mu_D}.
+When ratio is provided, it is relative to the stdev.}
 }
 \value{
 an object of ecld class
@@ -51,6 +64,7 @@ The default is the standard symmetric cusp distribution.
 The default also doesn't calculate any ecd extension.
 \code{ecld.from} allows you to pass the parameters from an existing ecd object.
 \code{ecld.validate} checks if an object is ecld class.
+\code{ecld.quartic} is a convenient constructor designed for quartic distribution.
 }
 \examples{
 ld <- ecld()

@@ -9,13 +9,24 @@ sigma <- 0.001
 lambdas <- c(1, 2, 2.5, 3)
 
 # ------------------------------------------------------
-test_that("test Gamma(s,x) function",{
+test_that("test Gamma(s,x) function, x=0",{
     s <- seq(0.5, 5, by=0.5)
     g1 <- ecld.gamma(s, 0)
     g2 <- gamma(s)
     expect_true(max(abs(g1-g2)) < eps5)
 })
+test_that("test Gamma(101, 1)",{
+    g1 <- ecld.gamma(101, ecd.mp1)
+    g2 <- ecd.mpfr(9.3326215443944)*ecd.mpfr(10)^157
+    expect_true(max(abs(g1/g2-1)) < eps5)
+})
+test_that("test Gamma(200, 2)",{
+    g1 <- ecld.gamma(200, 2*ecd.mp1)
+    g2 <- ecd.mpfr(3.94328933682395)*ecd.mpfr(10)^372
+    expect_true(max(abs(g1/g2-1)) < eps5)
+})
 
+# ------------------------------------------------------
 for (lambda in lambdas) {
     test_that(paste("test Gamma(s,x) hypergeo expansion, s=", lambda),{
         x <- 10

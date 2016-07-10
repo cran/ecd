@@ -1,7 +1,6 @@
 #' Calculate implied volatility using star OGF and small sigma formula
 #'
 #' Calculate implied volatility using star OGF and small sigma formula.
-#' Only the postive ki and Lc is supported.
 #' SGED is not supported yet.
 #'
 #' @param object an object of ecld class
@@ -13,6 +12,7 @@
 #'              When it is \code{NaN}, \code{L*} value is suppressed.
 #' @param order.global numeric, order of the hypergeometric series to be computed
 #'              for global regime. Default is \code{Inf}, use the incomplete gamma.
+#'              If \code{NaN}, then revert to OGF.
 #' @param ignore.mu logical, ignore \code{exp(mu)} on both sides, default is \code{FALSE}.
 #'
 #' @return The state price of option in star OGF terms.
@@ -32,12 +32,11 @@
                         order.local=Inf, order.global=Inf, ignore.mu=FALSE)
 {
     ecld.validate(object)
+    if (is.na(object@mu_D)) object@mu_D <- ecld.mu_D(object)
 
     if (!(otype %in% c("c","p"))) {
         stop(paste("Unknown option type:", otype))
     }
-
-    if (is.na(object@mu_D)) object@mu_D <- ecld.mu_D(object)
     
     if (length(ki) > 1) {
         f <- function(ki) ecld.ivol_ogf_star(object, ki, epsilon, otype,
@@ -74,7 +73,7 @@
         # global regime
         Lc1 <- NULL
         if (is.na(order.global)) {
-            stop("order.global can not be NA")
+            Lc1 <- ecld.op_O(sigma1, k, otype=otype) # only works for out-of-money k
         } else if (order.global==Inf) {
             Lc1 <- sigma1 * exp1 * ecld.ogf_star(ld1, ki1)
         } else {
@@ -90,7 +89,7 @@
         } else {
             Lc  <- sigma  * expL * ecld.ogf_star_exp(object, ki, order.local) + dM1
         }
-        return(Lc1 - Lc)
+        return((Lc1 - Lc)/sigma)
     }
     
     lower = 1

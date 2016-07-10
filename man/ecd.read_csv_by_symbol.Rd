@@ -4,10 +4,12 @@
 \alias{ecd.read_csv_by_symbol}
 \title{Read csv file of sample data}
 \usage{
-ecd.read_csv_by_symbol(symbol = "dji")
+ecd.read_csv_by_symbol(symbol = "dji", extdata_dir = NULL)
 }
 \arguments{
 \item{symbol}{Character for the symbol of the time series. Default: dji}
+
+\item{extdata_dir}{optionally specify user's own extdata folder}
 }
 \value{
 The data.frame object
@@ -22,6 +24,8 @@ dji <- ecd.read_csv_by_symbol("dji")
 spx <- ecd.read_csv_by_symbol("spxoption2")
 
 }
-\keyword{sample-data}
-\keyword{timeseries}
+\author{
+Stephen H-T. Lihn
+}
+\keyword{data}
 

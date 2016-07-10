@@ -17,6 +17,8 @@
 #'
 #' @export ecld.moment
 #' @export ecld.mgf
+#' @export ecld.mgf_by_sum
+#' @export ecld.mgf_quartic
 #'
 #' @examples
 #' ld <- ecld(lambda=3, sigma=0.01*ecd.mp1)
@@ -138,21 +140,59 @@
         }
         return(exp(t*mu)/y)
     }
+    #if (lambda==4 & b==0 & s*t > 0.005) {
+    #    return(ecld.mgf_quartic(object,t=t))
+    #}
+    
     # use truncated summation for symmetric
     if (lambda>2 & b==0) {
-        nmax <- floor(ecd.mp2f(ecld.mgf_trunc(object)))
-        if (nmax > 5000) {
-            nmax <- 5000 # cap the length of summation
-        }
-        
-        n <- seq(2, nmax, by=2) # skip odd terms
-        terms <- ecld.mgf_term(object, n)
-        if (any(is.na(terms))) {
-            stop("NA found in mgf_term. Consider using MPFR to improve precision!")
-        } 
-        return(1+sum(terms))
+        return(ecld.mgf_by_sum(object,t=t))
     }
     
     stop("Unknown analytic formula for MGF")
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecld.moment
+"ecld.mgf_by_sum" <- function(object, t=1)
+{
+    nmax <- ecd.mp2f(ecld.mgf_trunc(object, t=t))
+    if ((!is.numeric(nmax)) | is.na(nmax)) {
+        stop(paste("nmax is not valid numeric: ", nmax))
+    }
+    if (nmax > 5000) {
+        nmax <- 5000 # cap the length of summation
+    }
+    #if (object@lambda==4 & object@sigma*t < 0.01) {
+    #    # quartic dist only needs a few terms for small sigma
+    #    z = 1/(4*object@sigma*t)
+    #    N1 = z^2-1 # truncation rule
+    #    N2 = 10/log10(z^2) # 10-digit precision
+    #    nmax = max( c(min(c(N1,N2)), 12)) # min of precision, but at least 12 sums
+    #
+    
+    n <- seq(2, floor(nmax), by=2) # skip odd terms
+    terms <- ecld.mgf_term(object, order=n, t=t)
+    if (any(is.na(terms))) {
+        stop("NA found in mgf_term. Consider using MPFR to improve precision!")
+    }
+    return(1+sum(terms))
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecld.moment
+"ecld.mgf_quartic" <- function(object, t=1)
+{
+    ecld.validate(object, sged.allowed=FALSE)
+    one <- if(object@use.mpfr) ecd.mp1 else 1 # for consistent type
+    
+    lambda <- object@lambda
+    s <- object@sigma * one
+    b <- object@beta
+    mu <- object@mu * one
+
+    st <- s*t
+    z = 1/sqrt(4*s*t)
+    dz = z^2*exp(-z^2)
+    Mz <- z^3*(ecd.erfq(z,-1) -ecd.erfq(z,1))
+    return(exp(t*mu) * (Mz+dz))
 }
 ### <---------------------------------------------------------------------->

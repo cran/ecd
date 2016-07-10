@@ -8,9 +8,10 @@
 #' \code{ecld.gamma_2F0} is simply \eqn{{}_2 F_0 (1,1-s;;-1/x)}, which is used
 #' in the star OGF expansion.
 #'
-#' @param s numeric
-#' @param x numeric
+#' @param s numeric vector, for the order of incomplete gamma function
+#' @param x numeric or MPFR vector
 #' @param order numeric, the order of the power series
+#' @param na.stop logical, stop if NaN is generated. The default is \code{TRUE}.
 #'
 #' @return numeric
 #'
@@ -25,10 +26,51 @@
 #' @importFrom stats pgamma
 #'
 ### <======================================================================>
-"ecld.gamma" <- function(s, x=0) {
+"ecld.gamma" <- function(s, x=0, na.stop=TRUE) {
     # TODO pgamma can't handle MPFR
-    # TODO s seems to have a limit of about 100-200
-    pgamma(ecd.mp2f(x), ecd.mp2f(s), lower.tail = FALSE)*gamma(s)
+    # It also has a limitation on how large s can be!!!
+    pg_lim = 100
+    s = ecd.mp2f(s) 
+    
+    N = length(s)
+    M = length(x)
+    if (N>1 & M != N & M != 1) {
+        stop("ERROR: ecld.gamma reqires length(s)=length(x) when s is a vector")
+    }
+
+    # s can't have NA
+    if (any(is.na(s))) stop(paste("ecld.gamma: s must be valid numeric, instead I get", s))
+    
+    # for very large s, recurrence relation
+    if (any(s > pg_lim)) {
+        # pgamma has a limit of s=100, so we have to use recurrence relation
+        # this is somewhat slow though
+        if (N==1) {
+            G <- ecld.gamma(pg_lim, x, na.stop=na.stop)
+            for (s1 in pg_lim:(s-1)) {
+                G <- x^s1*exp(-x) + s1*G
+            }
+            return(G)
+        } else if (N>1) { # s is vector
+            if (M==1) x <- rep(x,N) # expand x if it is a number
+            G <- x*0
+            for (i in 1:N) {
+                G[i] <- ecld.gamma(s[i], x[i])
+            }
+            return(G)
+            
+        } else {
+            stop("Length of s is unknown")
+        }
+    }
+    
+    # pgamma, up to pg_lim
+    stopifnot(all(s <= pg_lim))
+    y <- pgamma(ecd.mp2f(x), ecd.mp2f(s), lower.tail = FALSE)*gamma(s)
+    if (na.stop & anyNA(y)) {
+        stop(paste("ERROR: ecld.gamma yields NaN for s=", s))
+    }
+    x*0+y # x*0 will preserve MPFR class, from x
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecld.gamma

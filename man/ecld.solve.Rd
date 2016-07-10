@@ -3,11 +3,20 @@
 \name{ecld.solve}
 \alias{ecld.laplace_B}
 \alias{ecld.solve}
+\alias{ecld.solve_by_poly}
+\alias{ecld.solve_isomorphic}
+\alias{ecld.solve_quartic}
 \title{Analytic solution for \eqn{y(x)} in lambda distribution}
 \usage{
 ecld.solve(a, b, ...)
 
 ecld.laplace_B(beta, sgn = 0, sigma = 0)
+
+ecld.solve_quartic(a, b, ...)
+
+ecld.solve_by_poly(a, b, ...)
+
+ecld.solve_isomorphic(a, b, ...)
 }
 \arguments{
 \item{a}{an object of ecld class}

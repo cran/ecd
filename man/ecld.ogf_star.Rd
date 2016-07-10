@@ -2,6 +2,7 @@
 % Please edit documentation in R/ecld-ogf-star-method.R
 \name{ecld.ogf_star}
 \alias{ecld.ogf_star}
+\alias{ecld.ogf_star_analytic}
 \alias{ecld.ogf_star_exp}
 \alias{ecld.ogf_star_gamma_star}
 \alias{ecld.ogf_star_hgeo}
@@ -14,6 +15,8 @@ ecld.ogf_star_hgeo(object, ki, order = 4)
 ecld.ogf_star_exp(object, ki, order = 3)
 
 ecld.ogf_star_gamma_star(object, ki, order = 6)
+
+ecld.ogf_star_analytic(object, ki)
 }
 \arguments{
 \item{object}{an object of ecld class}

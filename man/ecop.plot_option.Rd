@@ -4,14 +4,17 @@
 \alias{ecop.plot_option}
 \title{Plot option chain charts using conf from option sample data}
 \usage{
-ecop.plot_option(object, otype, simulate = TRUE)
+ecop.plot_option(object, otype, simulate = TRUE, do.polyfit = TRUE)
 }
 \arguments{
 \item{object}{an ecop object with conf}
 
 \item{otype}{option type}
 
-\item{simulate}{logic, if \code{TRUE}, simulate according to lambda transformation and lambda distribution.}
+\item{simulate}{logical, if \code{TRUE}, simulate according to lambda transformation and lambda distribution.}
+
+\item{do.polyfit}{logical, if \code{TRUE}, use polyfit to enhance the resolution on the peak of the lop-slope curve.
+In some cases, there aren't enough data points for polyfit, use this parameter to turn the feature off.}
 }
 \value{
 The \code{ecop.opt} object

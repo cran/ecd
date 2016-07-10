@@ -33,7 +33,12 @@ is mpfr, then this flag is set to \code{TRUE}.}
 
 \item{\code{ecd}}{the companion object of ecd class (optional)}
 
-\item{\code{mu_D}}{the risk-neutral drift (optional)}
+\item{\code{mu_D}}{the risk-neutral drift, optional, but preferred to have value
+if the object is to engage with OGF calculation.}
+
+\item{\code{epsilon}}{the residual risk, optional as a storage for lambda transformation}
+
+\item{\code{rho}}{the momentum shift, optional as a storage for lambda transformation}
 
 \item{\code{ecd_RN}}{the risk-neutral companion object of ecd class (optional)}
 

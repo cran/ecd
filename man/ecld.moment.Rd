@@ -2,12 +2,18 @@
 % Please edit documentation in R/ecld-moment-method.R
 \name{ecld.moment}
 \alias{ecld.mgf}
+\alias{ecld.mgf_by_sum}
+\alias{ecld.mgf_quartic}
 \alias{ecld.moment}
 \title{The moments and MGF of ecld}
 \usage{
 ecld.moment(object, order, ignore.mu = TRUE)
 
 ecld.mgf(object, t = 1)
+
+ecld.mgf_by_sum(object, t = 1)
+
+ecld.mgf_quartic(object, t = 1)
 }
 \arguments{
 \item{object}{an object of ecd class}

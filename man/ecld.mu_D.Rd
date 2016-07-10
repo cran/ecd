@@ -2,9 +2,18 @@
 % Please edit documentation in R/ecld-mu-D-method.R
 \name{ecld.mu_D}
 \alias{ecld.mu_D}
+\alias{ecld.mu_D_by_sum}
+\alias{ecld.mu_D_integrate}
+\alias{ecld.mu_D_quartic}
 \title{mu_D of ecld}
 \usage{
 ecld.mu_D(object, validate = TRUE)
+
+ecld.mu_D_quartic(object)
+
+ecld.mu_D_by_sum(object)
+
+ecld.mu_D_integrate(object, validate = TRUE)
 }
 \arguments{
 \item{object}{an object of ecld class}

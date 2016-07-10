@@ -1,14 +1,20 @@
 #' The O, V, U operators in option pricing model
 #'
 #' The O operator takes a vector of implied volatility \eqn{\sigma_1(k)}
-#' and transforms them to a vector of option state prices.
-#' The V operator takes a vector of option state prices and transforms
+#' and transforms them to a vector of normalized option prices.
+#' The V operator takes a vector of normalized option prices and transforms
 #' them to a vector of implied volatility \eqn{\sigma_1(k)}.
+#' If \code{ttm} is provided, \eqn{\sigma_1(k)} will be divided by square root of \code{2 ttm} and yield Black-Scholes implied volatility.
 #' The U operator calculates the log-slope of the option prices.
+#' The op_VL_quartic operator is the quartic composite of V x OGF, assuming epsilon and rho are deposited in the ecld object.
+#' The \code{RN} parameter for OGF is not available here. It is always assumed to be \code{FALSE}.
 #'
-#' @param sigma1 a vector of implied volatility (without T)
-#' @param L a vector of option state prices
-#' @param k a numeric vector of log-strike
+#' @param sigma1 numeric, a vector of implied volatility (without T)
+#' @param L numeric, a vector of normalized local option prices
+#' @param k numeric, a vector of log-strike
+#' @param ttm numeric, time to expiration (maturity), measured by fraction of year.
+#'        If specified, V operator will adjust \eqn{\sigma_1(k)} to Black-Scholes implied volatility.
+#'        Default is NaN.
 #' @param sd numeric, the stdev of the distribution.
 #'           Instead, if an ecld or ecd object is provided,
 #'           the stdev will be calculated from it.
@@ -17,8 +23,12 @@
 #'              \code{c} (default) or \code{p}.
 #' @param stop.on.na logical, to stop if fails to find solution.
 #'                   Default is to use NaN and not stop.
-#' @param use.mc logical, to use mclapply (default), or else just use for loop.
+#' @param use.mc logical, to use mclapply, or else just use for loop.
+#'               Default is \code{TRUE}.
 #'               For loop option is typically for debugging.
+#' @param object an object of ecld class created from \code{ecld.quartic}.
+#'               This object contains the full quartic lambda model spec in order
+#'               to be used in \code{ecld.op_VL_quartic}
 #'
 #' @return a numeric vector
 #'
@@ -29,9 +39,11 @@
 #' @export ecld.op_O
 #' @export ecld.op_V
 #' @export ecld.op_U_lag
+#' @export ecld.op_VL_quartic
 #'
 ### <======================================================================>
-"ecld.op_V" <- function(L, k, otype="c", stop.on.na=FALSE, use.mc=TRUE)
+"ecld.op_V" <- function(L, k, otype="c", ttm=NaN,
+                        stop.on.na=FALSE, use.mc=TRUE)
 {
     if (!(otype %in% c("c","p"))) {
         stop(paste("Unknown option type:", otype))
@@ -44,7 +56,8 @@
         stop("Length of L and k must match!")
     }
     if (len > 1 & use.mc==TRUE) {
-        f <- function(i) ecld.op_V(L[i], k[i], otype=otype, stop.on.na=stop.on.na)
+        f <- function(i) ecld.op_V(L[i], k[i], ttm=ttm,
+                                   otype=otype, stop.on.na=stop.on.na)
         s1 <- parallel::mclapply(1:len, f)
         s1 <- if (use.mpfr) ecd.mpfr(s1) else simplify2array(s1)
         return(s1)
@@ -54,10 +67,14 @@
     s1 <- L*NaN
     for (i in 1:length(s1)) {
         df <- function(s) ecld.op_O(s, k[i], otype=otype) - L[i]
+        if (is.na(L[i])) next
+        if (L[i] <= 0) next
         
-        lower = 0.01*ecd.mp1
-        while (lower > 0.0000001*L[i] & df(lower) > 0) {
+        retry <- 5
+        lower = 0.01*ecd.mp1 # for implied volitility this is already very low
+        while (retry > 0 & lower > 0.0000001*L[i] & df(lower) > 0) {
             lower <- lower/10
+            retry <- retry-1
         }
         if (df(lower) > 0 & stop.on.na) {
             stop(paste("Failed to find starting lower for i=", i, "L=", L[i], "at k=", k[i]))
@@ -91,8 +108,12 @@
         }
 
     }
-    return(s1)
-
+    
+    if (is.na(ttm)) {
+        return(s1)
+    } else {
+        return(s1/sqrt(2*ttm))
+    }
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecld.op_V
@@ -129,4 +150,21 @@
     slope <- dlogL/dk*sd
     ecd.mp2f(slope)
 }
+### <---------------------------------------------------------------------->
+#' @rdname ecld.op_V
+"ecld.op_VL_quartic" <- function(object, k, otype="c", ttm=NaN,
+                                 stop.on.na=FALSE, use.mc=TRUE)
+{
+    stopifnot(object@lambda==4 & object@beta==0)
+
+    L <- NULL
+    epsilon <- if(is.na(object@epsilon)) 0 else object@epsilon
+    rho <- if(is.na(object@rho)) 0 else object@rho
+    
+    L <- ecld.ogf_quartic(object, k-rho, otype=otype, RN=FALSE)
+    L <- L + epsilon
+    IV <- ecld.op_V(L, k-rho, otype=otype, ttm=ttm, stop.on.na=stop.on.na, use.mc=use.mc)
+    return(IV)
+}
+### <---------------------------------------------------------------------->
 

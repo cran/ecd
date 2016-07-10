@@ -19,6 +19,7 @@
 #' @export ecld.ogf_star_hgeo
 #' @export ecld.ogf_star_exp
 #' @export ecld.ogf_star_gamma_star
+#' @export ecld.ogf_star_analytic
 #'
 #' @examples
 #' ld <- ecld(sigma=0.001*ecd.mp1)
@@ -99,5 +100,35 @@
         p <- p + k2l^n*(f1-f2)
     }
     return(q + ki^2/2*exp(-k2l)*p)
+}
+### <======================================================================>
+#' @rdname ecld.ogf_star
+"ecld.ogf_star_analytic" <- function(object, ki)
+{
+    ecld.validate(object)
+    one <- if(object@use.mpfr) ecd.mp1 else 1 # for gamma function
+    
+    lambda <- object@lambda * one
+    x <- abs(ki)
+    
+    mypi <- if(object@use.mpfr) ecd.mppi else pi
+    if (lambda==1) {
+        L <- exp(-x^2)/2/sqrt(mypi) - x/2*ecd.erfc(x)
+        return(L)
+    }
+    if (lambda==2) {
+        L <- exp(-x)/2
+        return (L)
+    }
+    if (lambda==3) {
+        L <- exp(-x^(2/3))*(1+x^(2/3))*2/sqrt(mypi) - x/2*ecd.erfc(x^(1/3))
+        return(L)
+    }
+    if (lambda==4) {
+        L <- exp(-sqrt(x)) * (3+3*sqrt(x)+x)
+        return(L)
+    }
+
+    stop(paste("Unknown analytic solution for OGF star: lambda=", lambda))
 }
 ### <---------------------------------------------------------------------->

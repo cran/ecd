@@ -6,16 +6,18 @@
 \alias{ecld.gamma_hgeo}
 \title{Incomplete gamma function and asymptotic expansion}
 \usage{
-ecld.gamma(s, x = 0)
+ecld.gamma(s, x = 0, na.stop = TRUE)
 
 ecld.gamma_hgeo(s, x, order)
 
 ecld.gamma_2F0(s, x, order)
 }
 \arguments{
-\item{s}{numeric}
+\item{s}{numeric vector, for the order of incomplete gamma function}
 
-\item{x}{numeric}
+\item{x}{numeric or MPFR vector}
+
+\item{na.stop}{logical, stop if NaN is generated. The default is \code{TRUE}.}
 
 \item{order}{numeric, the order of the power series}
 }

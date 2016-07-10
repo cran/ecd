@@ -7,7 +7,9 @@
 #'
 #' @param object an ecop object with conf
 #' @param otype option type
-#' @param simulate logic, if \code{TRUE}, simulate according to lambda transformation and lambda distribution.
+#' @param simulate logical, if \code{TRUE}, simulate according to lambda transformation and lambda distribution.
+#' @param do.polyfit logical, if \code{TRUE}, use polyfit to enhance the resolution on the peak of the lop-slope curve.
+#'          In some cases, there aren't enough data points for polyfit, use this parameter to turn the feature off.
 #'
 #' @return The \code{ecop.opt} object
 #'
@@ -25,7 +27,9 @@
 #'     ecop.plot_option(op, otype="p")
 #' }
 ### <======================================================================>
-"ecop.plot_option" <- function(object, otype, simulate=TRUE) {
+"ecop.plot_option" <- function(object, otype, 
+                               simulate=TRUE, 
+                               do.polyfit=TRUE) {
 
     if (!(otype %in% c("c","p"))) {
         stop(paste("Unknown option type:", otype))
@@ -55,18 +59,20 @@
     imp_vol <- ecop.bs_implied_volatility(V, K, S, ttm=T, div_yield=y, otype=otype)
     imp_vol_bid <- ecop.bs_implied_volatility(V_bid, K, S, ttm=T, div_yield=y, otype=otype)
     imp_vol_ask <- ecop.bs_implied_volatility(V_ask, K, S, ttm=T, div_yield=y, otype=otype)
-
+    imp_vol_given <- opd@IV
+    
     # 
     momen <- opd@momentum
     epsilon <- opd@epsilon
     k_cusp <- opd@k_cusp
     ld1 <- opd@ecldOrEcd
-    mu_D <- if (class(ld1)=="ecld") ecld.mu_D(ld1) else ecd.mu_D(ld1)
+    if (class(ld1)=="ecld" & is.na(ld1@mu_D)) ld1@mu_D <- ecld.mu_D(ld1)
+    mu_D <- if (class(ld1)=="ecld") ld1@mu_D else ecd.mu_D(ld1)
 
     # use a higher density for theoretical calculation
     k2 <- seq(min(k), max(k), length.out=100)
-    V_fit <- ecop.polyfit_option(k, V, k_cusp, k.new=k2)
-
+    V_fit <- if (do.polyfit) ecop.polyfit_option(k, V, k_cusp, k.new=k2) else NULL
+    
     V_ecop <- NULL
     V0_ecop <- NULL
     V2_ecop <- NULL
@@ -141,7 +147,7 @@
     xpos <- xmax * 0.25
     text( xpos, ypos-dy,   paste(sprintf("S= %.2f", S)), cex=sc, pos=4 )
     text( xpos, ypos-dy*2, paste(sprintf("days= %d", DAYS)), cex=sc, pos=4 )
-    text( xpos, ypos-dy*3, paste(sprintf("T= %d/365", T*365)), cex=sc, pos=4 )
+    text( xpos, ypos-dy*3, paste(sprintf("T= %.1f/365", T*365)), cex=sc, pos=4 )
     text( xpos, ypos-dy*4, paste(sprintf("$r_f$= %.2f$\\%%$", r*100)), cex=sc, pos=4 )
     text( xpos, ypos-dy*5, paste(sprintf("div yld= %.2f$\\%%$", y*100)), cex=sc, pos=4 )
     
@@ -175,8 +181,9 @@
     # -----------------------------------------------------------
     sd1 <- if (class(ld1)=="ecld") ecld.sd(ld1) else ecd.sd(ld1)
 
-    dlogV_fit   <- ecld.op_U_lag(V_fit, k2, sd1, 1)
+    dlogV_fit   <- if (do.polyfit) ecld.op_U_lag(V_fit, k2, sd1, 1) else NULL
     dlogV       <- ecld.op_U_lag(V, k, sd1, 2)
+    dlogV_ask   <- ecld.op_U_lag(V_ask, k, sd1, 2)
     dlogV_ecop  <- ecld.op_U_lag(V_ecop,  k2, sd1, 1)
     dlogV0_ecop <- ecld.op_U_lag(V0_ecop,  k2, sd1, 1)
     dlogV2_ecop <- ecld.op_U_lag(V2_ecop, k2, sd1, 1)
@@ -186,11 +193,15 @@
     lVmax <- if (otype=="c") 0 else max(all_dlogV, na.rm=TRUE)
 
     # log-slope of price chart
-    plot(k2, dlogV_fit, type="l", col="black", lwd=2, lty=3,
+    plot(k, dlogV, type="o", pch=1, col="black",
          xlab="$k$", ylab=paste("$U_", otype, "(k)$", sep=""),
          main=paste("Log-slope of Option Prices"), 
          ylim=c(lVmin, lVmax))
-    points(k, dlogV, col="black")
+    points(k, dlogV_ask, type="o", pch=2, col="green")
+    
+    if (do.polyfit) {
+        lines(k2, dlogV_fit, type="l", col="black", lwd=2, lty=3)
+    }
     
     verticals()
 
@@ -230,6 +241,12 @@
          main=paste("Implied Volatility"))
     lines(k, imp_vol_bid, type="o", pch=4, col="green")
     lines(k, imp_vol_ask, type="o", pch=2, col="green")
+    
+    imp_vol_given_is_empty <- all(is.na(imp_vol_given))
+    if (! imp_vol_given_is_empty) {
+        points(k, imp_vol_given, type="o", pch=23, col="purple", bg="purple")
+    }
+    
     abline(h=0)
     verticals(segment_y=0.2)
 

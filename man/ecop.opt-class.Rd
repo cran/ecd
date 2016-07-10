@@ -42,6 +42,8 @@ the type-specific (p or c) option data.
 \item{\code{V_ask}}{ask option price}
 
 \item{\code{V}}{finalized option price (likely mid-point)}
+
+\item{\code{IV}}{implied volatility from the vendor}
 }}
 \author{
 Stephen H. Lihn

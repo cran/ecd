@@ -5,13 +5,14 @@
 #' The default also doesn't calculate any ecd extension.
 #' \code{ecld.from} allows you to pass the parameters from an existing ecd object.
 #' \code{ecld.validate} checks if an object is ecld class.
+#' \code{ecld.quartic} is a convenient constructor designed for quartic distribution.
 #'
 #' @param lambda numeric, the lambda parameter. Must be positive. Default: 3.
 #' @param sigma numeric, the scale parameter. Must be positive. Default: 1.
 #' @param beta  numeric, the skewness parameter. Default: 0.
 #' @param mu    numeric, the location parameter. Default: 0.
 #' @param with.ecd logical, also calculate the ecd object, default is \code{FALSE}.
-#' @param with.mu_D logical, also calculate the risk-neutral drift, default is \code{FALSE}.
+#' @param with.mu_D logical, also calculate the ecd risk-neutral drift, default is \code{FALSE}.
 #'                  If \code{TRUE}, this flag supercedes \code{with.ecd}.
 #'                  Also \code{mu} must set to zero.
 #' @param with.RN logical, also calculate the risk-neutral ecd object, default is \code{FALSE}.
@@ -21,6 +22,12 @@
 #' @param verbose logical, display timing information, for debugging purpose, default is \code{FALSE}.
 #' @param sged.allowed logical, used in \code{ecld.validate} to indicate if the function allows SGED.
 #' @param sged.only logical, used in \code{ecld.validate} to indicate if the function is only for SGED.
+#' @param mu_plus,mu_plus_ratio numeric, excess value in addition to \code{mu_D}.
+#'                When ratio is provided, it is relative to the stdev.
+#' @param epsilon The supplemental residual premium for lambda transformation.
+#'                It is default to NaN in ecld constructor since its meaning is not defined.
+#' @param rho The supplemental momentum shift for lambda transformation.
+#'                It is default to NaN in ecld constructor since its meaning is not defined.
 #'
 #' @return an object of ecld class
 #'
@@ -30,6 +37,7 @@
 #'
 #' @export ecld
 #' @export ecld.from
+#' @export ecld.quartic
 #' @export ecld.validate
 #'
 #' @examples
@@ -38,8 +46,9 @@
 
 ### <======================================================================>
 "ecld" <- function(lambda = 3, sigma = 1, beta = 0, mu = 0,
-                  with.ecd = FALSE, with.mu_D = FALSE,
-                  with.RN = FALSE, is.sged = FALSE, verbose=FALSE)
+                   epsilon = NaN, rho = NaN,
+                   with.ecd = FALSE, with.mu_D = FALSE,
+                   with.RN = FALSE, is.sged = FALSE, verbose=FALSE)
 {
     call <- match.call()
 
@@ -82,6 +91,8 @@
                sigma = unname(sigma),
                beta  = unname(beta),
                mu    = unname(mu),
+               epsilon = unname(epsilon),
+               rho = unname(rho),
                use.mpfr = unname(use.mpfr),
                is.sged = is.sged,
                ecd = new("ecd"),
@@ -136,7 +147,8 @@
         stop("Must come from an ecd object with lambda-only parametrization")
     }
     
-    ecld(lambda = object@lambda, sigma = object@sigma, beta = object@beta, mu = object@mu,
+    ecld(lambda = object@lambda, sigma = object@sigma, beta = object@beta,
+         mu = object@mu, epsilon = object@epsilon, rho = object@rho,
          with.ecd = with.ecd, with.mu_D = with.mu_D,
          with.RN = with.RN, verbose=verbose)
 }
@@ -159,6 +171,32 @@
         stop("SGED object is not allowed here")
     }
     return(TRUE)
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecld
+"ecld.quartic" <- function(sigma, epsilon, rho, mu_plus_ratio=NaN, mu_plus=NaN)
+{
+    # mu_plus and mu_plus_ratio are mutually exclusive
+    if ((! is.na(mu_plus)) & (! is.na(mu_plus_ratio))) {
+        stop("Only one of mu_plus and mu_plus_ratio can have value")
+    }
+
+    sigma <- sigma * ecd.mp1 # force to MPFR
+
+    ld0 <- ecld(lambda=4, sigma=sigma)
+    if (! is.na(mu_plus_ratio)) {
+        sd0 <- ecld.sd(ld0)
+        mu_plus <- mu_plus_ratio * sd0
+    }
+    if (is.na(mu_plus)) stop("Can not determine mu_plus")
+    
+    mu_D <- ecld.mu_D_quartic(ld0)
+    ld1 <- ecld(lambda=4, sigma=sigma, mu=mu_D+mu_plus)
+    ld1@mu_D <- mu_D
+    ld1@epsilon <- epsilon
+    ld1@rho <- rho
+    
+    return(ld1)
 }
 ### <---------------------------------------------------------------------->
 
