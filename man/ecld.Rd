@@ -3,6 +3,7 @@
 \name{ecld}
 \alias{ecld}
 \alias{ecld.from}
+\alias{ecld.from_sd}
 \alias{ecld.quartic}
 \alias{ecld.validate}
 \title{Constructor of ecld class}
@@ -17,6 +18,8 @@ ecld.from(object, with.ecd = FALSE, with.mu_D = FALSE, with.RN = FALSE,
 ecld.validate(object, sged.allowed = FALSE, sged.only = FALSE)
 
 ecld.quartic(sigma, epsilon, rho, mu_plus_ratio = NaN, mu_plus = NaN)
+
+ecld.from_sd(lambda = 3, sd = 1, beta = 0, mu = 0)
 }
 \arguments{
 \item{lambda}{numeric, the lambda parameter. Must be positive. Default: 3.}
@@ -54,6 +57,10 @@ If \code{TRUE}, this flag supercedes \code{with.mu_D}.}
 
 \item{mu_plus, mu_plus_ratio}{numeric, excess value in addition to \code{mu_D}.
 When ratio is provided, it is relative to the stdev.}
+
+\item{sd}{numeric, the scale parameter expressed in stdev instead of sigma. Internally,
+It is converted to sigma via \code{uniroot} on \code{ecld.sd}.
+Must be positive. Default: 1.}
 }
 \value{
 an object of ecld class
@@ -65,10 +72,12 @@ The default also doesn't calculate any ecd extension.
 \code{ecld.from} allows you to pass the parameters from an existing ecd object.
 \code{ecld.validate} checks if an object is ecld class.
 \code{ecld.quartic} is a convenient constructor designed for quartic distribution.
+\code{ecld.from_sd} calculates sigma from a given sd and renders a vanila ecld object.
 }
 \examples{
 ld <- ecld()
 ld <- ecld(2, 0.01)
+ld <- ecld.from_sd(3, 0.1)
 }
 \author{
 Stephen H-T. Lihn

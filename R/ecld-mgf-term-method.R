@@ -1,7 +1,8 @@
 #' The term structure of ecld symmetric MGF
 #'
 #' \code{ecld.mgf_term} and \code{ecld.mgf_diterm} are the term and derivative
-#' of the term by order (n) in the summation of MGF.
+#' of the term by order (n) in the summation of MGF. Since \code{ecld.mgf_term} uses lgamma instead of gamma itself,
+#' \code{ecld.mgf_term_original} is to preserve the original formula.
 #' \code{ecld.mgf_trunc} uses \code{ecld.mgf_diterm} to locate the truncation
 #' of MGF terms.
 #' \code{ecld.mgf_trunc_max_sigma} locates the maximum sigma that keeps MGF finite for each lambda.
@@ -18,6 +19,7 @@
 #' @author Stephen H-T. Lihn
 #'
 #' @export ecld.mgf_term
+#' @export ecld.mgf_term_original
 #' @export ecld.mgf_diterm
 #' @export ecld.mgf_trunc
 #' @export ecld.mgf_trunc_max_sigma
@@ -47,12 +49,37 @@
     }
     
     if (object@beta==0) {
+        # x <- gamma(lambda*(n+1)/2)
+        # y <- gamma(lambda/2)*gamma(n+1)
+        # return((s*t)^n * x/y * exp(t*mu))
+        
+        # (s*t)^n * x/y is transformed to exp(n*log(s*t)+log(x)-log(y))
+        lx <- lgamma(lambda*(n+1)/2)
+        ly <- lgamma(lambda/2)+lgamma(n+1)
+        return(exp(n*log(s*t) + lx-ly) * exp(t*mu))
+    }
+    stop("Unknown analytic formula for MGF term")
+
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecld.mgf_term
+"ecld.mgf_term_original" <- function(object, order, t=1)
+{
+    ecld.validate(object, sged.allowed=FALSE)
+    one <- if(object@use.mpfr) ecd.mp1 else 1 # for gamma function
+    
+    lambda <- object@lambda * one
+    s <- object@sigma * one
+    mu <- object@mu * one
+    n <- order * one
+    
+    if (object@beta==0) {
         x <- gamma(lambda*(n+1)/2)
         y <- gamma(lambda/2)*gamma(n+1)
         return((s*t)^n * x/y * exp(t*mu))
     }
     stop("Unknown analytic formula for MGF term")
-
+    
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecld.mgf_term

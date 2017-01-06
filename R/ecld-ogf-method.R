@@ -43,6 +43,7 @@
     lambda <- object@lambda * one
     s <- object@sigma * one
     b <- object@beta
+    mu <- if (RN) object@mu_D else object@mu
 	
     # SGED, use ogf_gamma
     if (object@is.sged) {
@@ -55,16 +56,23 @@
         if (b != 0) {
             stop("lambda=1: beta must be zero")
         }
-        if (! RN) {
-            stop("lambda=1: RN must be true")
+        if (RN) {
+            M1k <- 1-exp(k)
+            p <- -1/2*ecd.erf(k/s-s/4)
+            q <- exp(k)/2*ecd.erf(k/s+s/4)
+            Lc <- p + q + M1k/2
+            if (otype=="c") return(Lc)
+            if (otype=="p") return(Lc - M1k)
         }
-
-        M1k <- 1-exp(k)
-        p <- -1/2*ecd.erf(k/s-s/4)
-        q <- exp(k)/2*ecd.erf(k/s+s/4)
-        Lc <- p + q + M1k/2
-        if (otype=="c") return(Lc)
-        if (otype=="p") return(Lc - M1k)
+        else {
+            Id <- exp(s^2/4+mu)
+            M1k <- Id-exp(k)
+            p <- -1/2*Id*ecd.erf(k/s-s/2-mu/s)
+            q <- exp(k)/2*ecd.erf(k/s-mu/s)
+            Lc <- p + q + M1k/2
+            if (otype=="c") return(Lc)
+            if (otype=="p") return(Lc - M1k)
+        }
     }
 
     # quartic, only works for large enough sigma due to precision issue
@@ -73,7 +81,6 @@
     #}
 
     # ----------------------------------------------------
-    mu <- if (RN) object@mu_D else object@mu
     M1 <- if (RN) 1 else exp(object@mu - object@mu_D)
     M1k <- M1-exp(k)
     ki <- (k-mu)/s

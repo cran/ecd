@@ -3,11 +3,14 @@
 \name{ecld.mgf_term}
 \alias{ecld.mgf_diterm}
 \alias{ecld.mgf_term}
+\alias{ecld.mgf_term_original}
 \alias{ecld.mgf_trunc}
 \alias{ecld.mgf_trunc_max_sigma}
 \title{The term structure of ecld symmetric MGF}
 \usage{
 ecld.mgf_term(object, order, t = 1)
+
+ecld.mgf_term_original(object, order, t = 1)
 
 ecld.mgf_diterm(object, order, t = 1)
 
@@ -27,7 +30,8 @@ numeric
 }
 \description{
 \code{ecld.mgf_term} and \code{ecld.mgf_diterm} are the term and derivative
-of the term by order (n) in the summation of MGF.
+of the term by order (n) in the summation of MGF. Since \code{ecld.mgf_term} uses lgamma instead of gamma itself,
+\code{ecld.mgf_term_original} is to preserve the original formula.
 \code{ecld.mgf_trunc} uses \code{ecld.mgf_diterm} to locate the truncation
 of MGF terms.
 \code{ecld.mgf_trunc_max_sigma} locates the maximum sigma that keeps MGF finite for each lambda.

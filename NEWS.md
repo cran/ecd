@@ -1,3 +1,8 @@
+# ecd 0.8.3
+
+2017-01-05: Primarily a fix for RSQLite. Functions supporting VIX option pricing model are added.
+The paper on PDE and Local Volatility Function is about to be finished.
+
 # ecd 0.8.2
 
 2016-07-09: Finalized the quartic lambda model and the supporting library for the paper.

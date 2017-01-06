@@ -146,3 +146,59 @@ test_that("test quartic max RNV at sigma=0",{
 })
 
 # ------------------------------------------------------
+# VIX
+test_that("test ecld.from_sd at lambda=3",{
+    sd = 0.5
+    ld1 <- ecld.from_sd(3, sd)
+    ld2 <- ecld.from_sd(3, sd, beta=0.5)
+    err1 = abs(ecld.sd(ld1)/sd-1)
+    err2 = abs(ecld.sd(ld2)/sd-1)
+    expect_true(err1 < eps & err2 < eps)
+})
+test_that("test lambda/skew ratio at lambda=3",{
+
+    lambda = 3
+    
+    # use a very small atm_imp_k to approximate small-sigma limit
+    atm_imp_k = 0.001
+
+    get_ld1 <- function(sd, lambda, beta=0) {
+        lds <- ecop.get_ld_triple(lambda, sd, beta, 
+                              mu_plus_ratio=0, 
+                              epsilon_ratio=0, 
+                              atm_imp_k=atm_imp_k)
+        lds$ld1
+    }
+    sd <- ecop.find_fixed_point_sd_by_lambda(get_ld1, lambda, beta=0)
+    ld1 <- get_ld1(sd, lambda, beta=0)
+    atm_ki <- ecld.fixed_point_atm_ki(ld1)
+    atm_skew <- ecld.op_Q_skew(ld1, atm_ki, atm_ki*0.001)
+    ls_ratio_approx <- lambda/atm_skew
+    
+    # L_star implementation
+    atm_ki <- ecld.fixed_point_SN0_atm_ki(lambda)
+    atm_skew <- ecld.op_Q_skew(ld1, atm_ki, atm_ki*0.001)
+    ls_ratio_star <- lambda/atm_skew
+
+    ls_ratio_RN0 <- ecld.fixed_point_SN0_lambda_skew_ratio(lambda)
+    ls_ratio_num <- 8.242
+    err1 = abs(ls_ratio_approx/ls_ratio_num-1)
+    err2 = abs(ls_ratio_star/ls_ratio_num-1)
+    err3 = abs(ls_ratio_RN0/ls_ratio_num-1)
+    
+    expect_true(err1 < eps*2 & err2 < eps*2 & err3 < eps)
+})
+
+# -------------------------------------------------------
+for (lambda in c(1,2,3,4)) {
+    test_that(paste("test ecld.ogf shift at lambda=", lambda),{
+        
+        ld1 <- ecld(lambda, 0.01, rho=0.01)
+        ld2 <- ecld(lambda, 0.01, mu=0.01)
+        v1 <- ecld.ogf(ld1, -0.01-ld1@rho, otype="p", RN=FALSE)
+        v2 <- ecld.ogf(ld2, -0.01, otype="p", RN=FALSE)*exp(-ld1@rho)
+
+        err = abs(v1/v2-1)
+        expect_true(err < eps)
+    })
+}

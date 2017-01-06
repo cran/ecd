@@ -25,7 +25,13 @@ test_that("test Gamma(200, 2)",{
     g2 <- ecd.mpfr(3.94328933682395)*ecd.mpfr(10)^372
     expect_true(max(abs(g1/g2-1)) < eps5)
 })
-
+test_that("test lgamma in ecld.mgf_term",{
+    ld <- ecld(3, 0.05)
+    n <- c(10, 50, 100)
+    g1 <- ecld.mgf_term(ld, n)
+    g2 <- ecld.mgf_term_original(ld, n)
+    expect_true(max(abs(g1/g2-1)) < eps5)
+})
 # ------------------------------------------------------
 for (lambda in lambdas) {
     test_that(paste("test Gamma(s,x) hypergeo expansion, s=", lambda),{

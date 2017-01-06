@@ -25,7 +25,10 @@
 ### <======================================================================>
 "ecld.mpnum" <- function(object, x)
 {
-    if (object@use.mpfr) ecd.mpfr(x) else x
+    if (object@use.mpfr) return(ecd.mpfr(x))
+    # deal with numeric complication from mclapply
+    if (class(x)=="list") return(simplify2array(x))
+    return(x)
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecld.mpnum
@@ -43,6 +46,6 @@
 #' @rdname ecld.mpnum
 "ecld.mclapply" <- function(object, x, FUN, ...) {
     rs <- parallel::mclapply(x, FUN, ...)
-    ecld.mpnum(object, rs)
+    ecld.mpnum(object, rs) # convert to vector
 }
 ### <---------------------------------------------------------------------->

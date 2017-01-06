@@ -55,13 +55,13 @@
     # regular file
     f <- .ecd.locate_file(filename, extdata_dir=extdata_dir)
     if (length(f) > 0 & file.exists(f)) {
-        return(read.csv(f, header=TRUE))    
+        return(read.csv(f, header=TRUE, stringsAsFactors=FALSE))
     }
     
     # try zip file (arranged to save storage)
     f <- .ecd.locate_file(paste(filename, "zip", sep="."), extdata_dir=extdata_dir)
     if (length(f) > 0 & file.exists(f)) {
-        df <- read.csv(unz(f, filename), header=TRUE)
+        df <- read.csv(unz(f, filename), header=TRUE, stringsAsFactors=FALSE)
         return(df)
     }
     stop(paste("Failed to locate file for", filename))

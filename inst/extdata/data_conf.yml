@@ -53,6 +53,13 @@ spx:
     test_date: "19500501"
     test_val: 18.22
 
+vxv:
+    cols: 7
+    col_in: Close
+    date_format: "%Y-%m-%d"
+    test_date: "20060725"
+    test_val: 14.61
+
 #############################################################
 # CBOE market data
 #    

@@ -89,6 +89,7 @@
     }
     
     if (lambda==4 & b==0) {
+        object@mu <- 0
         return(ecld.mu_D_by_sum(object))
     }
 

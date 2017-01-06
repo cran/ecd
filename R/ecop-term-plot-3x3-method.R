@@ -135,6 +135,12 @@
         ivol_ecop <- ecd.mp2f(ecld.op_VL_quartic(ld1, k_all, otype="p", ttm=ttm))
         
         lines(k_all, ivol_ecop, col="red", lwd=3)
+        
+        y_sd <- ecd.mp2f(ecld.sd(ld1))/sqrt(ttm)
+        
+        segments(-0.1, y_sd, 0, y_sd)
+        text(x=-0.1, y=y_sd, labels=sprintf("stdev $\\sqrt{T}$ = %.3f", y_sd), cex=0.8, pos=2)
+
     }
     
 }

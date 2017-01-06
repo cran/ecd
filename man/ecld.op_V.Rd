@@ -7,10 +7,10 @@
 \alias{ecld.op_VL_quartic}
 \title{The O, V, U operators in option pricing model}
 \usage{
-ecld.op_V(L, k, otype = "c", ttm = NaN, stop.on.na = FALSE,
+ecld.op_V(L, k, otype = "c", ttm = NaN, rho = 0, stop.on.na = FALSE,
   use.mc = TRUE)
 
-ecld.op_O(sigma1, k, otype = "c")
+ecld.op_O(sigma1, k, otype = "c", rho = 0)
 
 ecld.op_U_lag(L, k, sd, n = 2)
 
@@ -28,6 +28,8 @@ ecld.op_VL_quartic(object, k, otype = "c", ttm = NaN, stop.on.na = FALSE,
 \item{ttm}{numeric, time to expiration (maturity), measured by fraction of year.
 If specified, V operator will adjust \eqn{\sigma_1(k)} to Black-Scholes implied volatility.
 Default is NaN.}
+
+\item{rho}{numeric, specify the shift in the global mu.}
 
 \item{stop.on.na}{logical, to stop if fails to find solution.
 Default is to use NaN and not stop.}

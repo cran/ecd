@@ -6,6 +6,7 @@
 #' \code{ecld.from} allows you to pass the parameters from an existing ecd object.
 #' \code{ecld.validate} checks if an object is ecld class.
 #' \code{ecld.quartic} is a convenient constructor designed for quartic distribution.
+#' \code{ecld.from_sd} calculates sigma from a given sd and renders a vanila ecld object.
 #'
 #' @param lambda numeric, the lambda parameter. Must be positive. Default: 3.
 #' @param sigma numeric, the scale parameter. Must be positive. Default: 1.
@@ -28,6 +29,9 @@
 #'                It is default to NaN in ecld constructor since its meaning is not defined.
 #' @param rho The supplemental momentum shift for lambda transformation.
 #'                It is default to NaN in ecld constructor since its meaning is not defined.
+#' @param sd numeric, the scale parameter expressed in stdev instead of sigma. Internally,
+#'                It is converted to sigma via \code{uniroot} on \code{ecld.sd}.
+#'                Must be positive. Default: 1.
 #'
 #' @return an object of ecld class
 #'
@@ -39,10 +43,12 @@
 #' @export ecld.from
 #' @export ecld.quartic
 #' @export ecld.validate
+#' @export ecld.from_sd
 #'
 #' @examples
 #' ld <- ecld()
 #' ld <- ecld(2, 0.01)
+#' ld <- ecld.from_sd(3, 0.1)
 
 ### <======================================================================>
 "ecld" <- function(lambda = 3, sigma = 1, beta = 0, mu = 0,
@@ -148,7 +154,7 @@
     }
     
     ecld(lambda = object@lambda, sigma = object@sigma, beta = object@beta,
-         mu = object@mu, epsilon = object@epsilon, rho = object@rho,
+         mu = object@mu, # neither epsilon nor rho is in ecd object
          with.ecd = with.ecd, with.mu_D = with.mu_D,
          with.RN = with.RN, verbose=verbose)
 }
@@ -197,6 +203,29 @@
     ld1@rho <- rho
     
     return(ld1)
+}
+### <======================================================================>
+#' @rdname ecld
+"ecld.from_sd" <- function(lambda = 3, sd = 1, beta = 0, mu = 0)
+{
+    one <- sd*0 + 1
+    
+    sigma = ecd.mp2f(sd * sqrt(gamma(lambda/2)/gamma(lambda*3/2)))
+    if (beta != 0) {
+        sigma0 = sigma
+        match_sd <- function(sigma) {
+            ld0 <- ecld(lambda=lambda, sigma=sigma, beta=beta)
+            ecd.mp2f(ecld.sd(ld0))-sd
+        }
+        rs <- uniroot(match_sd, lower=sigma0*0.1, upper=sigma0*10)
+        sigma <- rs$root
+    }
+    sigma <- sigma * one
+    object <- ecld(lambda=lambda, sigma=sigma, beta=beta, mu=mu)
+    object@mu_D <- ecld.mu_D(object)
+    
+    ecld.validate(object, sged.allowed=TRUE)
+    return(object)
 }
 ### <---------------------------------------------------------------------->
 

@@ -15,6 +15,7 @@
 #' @param ttm numeric, time to expiration (maturity), measured by fraction of year.
 #'        If specified, V operator will adjust \eqn{\sigma_1(k)} to Black-Scholes implied volatility.
 #'        Default is NaN.
+#' @param rho numeric, specify the shift in the global mu.
 #' @param sd numeric, the stdev of the distribution.
 #'           Instead, if an ecld or ecd object is provided,
 #'           the stdev will be calculated from it.
@@ -42,7 +43,7 @@
 #' @export ecld.op_VL_quartic
 #'
 ### <======================================================================>
-"ecld.op_V" <- function(L, k, otype="c", ttm=NaN,
+"ecld.op_V" <- function(L, k, otype="c", ttm=NaN, rho=0,
                         stop.on.na=FALSE, use.mc=TRUE)
 {
     if (!(otype %in% c("c","p"))) {
@@ -56,7 +57,7 @@
         stop("Length of L and k must match!")
     }
     if (len > 1 & use.mc==TRUE) {
-        f <- function(i) ecld.op_V(L[i], k[i], ttm=ttm,
+        f <- function(i) ecld.op_V(L[i], k[i], ttm=ttm, rho=rho,
                                    otype=otype, stop.on.na=stop.on.na)
         s1 <- parallel::mclapply(1:len, f)
         s1 <- if (use.mpfr) ecd.mpfr(s1) else simplify2array(s1)
@@ -66,7 +67,7 @@
     
     s1 <- L*NaN
     for (i in 1:length(s1)) {
-        df <- function(s) ecld.op_O(s, k[i], otype=otype) - L[i]
+        df <- function(s) ecld.op_O(s, k[i], otype=otype, rho=rho) - L[i]
         if (is.na(L[i])) next
         if (L[i] <= 0) next
         
@@ -97,7 +98,7 @@
         if (df(lower) * df(upper) < 0 & upper > lower) {
             rt <- ecd.uniroot(df, lower=lower, upper=upper, use.mpfr=use.mpfr)
             s_appr <- rt$root
-            df2 <- function(sn) ecld.op_O(sn*s_appr, k[i], otype=otype) - L[i]
+            df2 <- function(sn) ecld.op_O(sn*s_appr, k[i], otype=otype, rho=rho) - L[i]
             rt2 <- ecd.uniroot(df2, lower=0.9, upper=1.1, use.mpfr=use.mpfr)
             s1[i] <- s_appr * rt2$root
         } else {
@@ -117,7 +118,7 @@
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecld.op_V
-"ecld.op_O" <- function(sigma1, k, otype="c")
+"ecld.op_O" <- function(sigma1, k, otype="c", rho=0)
 {
     if (!(otype %in% c("c","p"))) {
         stop(paste("Unknown option type:", otype))
@@ -126,9 +127,9 @@
     
     # use MPFR for erf
     sigma1 <- sigma1 * ecd.mp1
-    M1k <- 1-exp(k)
-    p <- -1/2 * ecd.erf(k/sigma1 - sigma1/4)
-    q <- exp(k)/2 * ecd.erf(k/sigma1 + sigma1/4)
+    M1k <- exp(rho)-exp(k)
+    p <- -exp(rho)/2 * ecd.erf((k-rho)/sigma1 - sigma1/4)
+    q <- exp(k)/2 * ecd.erf((k-rho)/sigma1 + sigma1/4)
 
     sgn <- if (otype=="c") 1 else -1
     L <- p + q + sgn*M1k/2
