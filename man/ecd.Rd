@@ -53,4 +53,3 @@ d <- ecd(alpha=1, gamma=1)
 Stephen H. Lihn
 }
 \keyword{constructor}
-

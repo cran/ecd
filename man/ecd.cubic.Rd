@@ -27,4 +27,3 @@ ecd.cubic(d)
 ecd.cubic(d, 0)
 }
 \keyword{cubic}
-

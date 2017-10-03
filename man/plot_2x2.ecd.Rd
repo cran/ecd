@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-plot-2x2-generic.R
 \docType{methods}
 \name{plot_2x2.ecd}
+\alias{plot_2x2.ecd}
 \alias{plot_2x2}
 \alias{plot_2x2,ecd-method}
-\alias{plot_2x2.ecd}
 \title{Standard 2x2 plot for sample data}
 \usage{
 plot_2x2.ecd(object, ts, EPS = FALSE, eps_file = NA)
@@ -31,4 +31,3 @@ plot_2x2(d, ts)
 }
 }
 \keyword{plot}
-

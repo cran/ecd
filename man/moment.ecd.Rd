@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-moment-generic.R
 \docType{methods}
 \name{moment.ecd}
+\alias{moment.ecd}
 \alias{moment}
 \alias{moment,ecd-method}
-\alias{moment.ecd}
 \title{Compute the moment of ecd via integration}
 \usage{
 \method{moment}{ecd}(object, order, center = FALSE, asymp.lower = -Inf,
@@ -46,4 +46,3 @@ moment(d, 2)
 Stephen H. Lihn
 }
 \keyword{moment}
-

@@ -24,4 +24,3 @@ conf <- ecd.read_symbol_conf("dji")
 }
 \keyword{fit}
 \keyword{sample-data}
-

@@ -1,23 +1,27 @@
 Package: ecd
 Type: Package
-Title: Elliptic Distribution and Lambda Option Pricing Model
-Version: 0.8.3
-Date: 2017-01-05
+Title: Elliptic Lambda Distribution and Option Pricing Model
+Version: 0.9.1
+Date: 2017-09-30
 Authors@R: person(given = c("Stephen", "H-T."), family = "Lihn",
                   email = "stevelihn@gmail.com", role = c("aut", "cre"))
 Author: Stephen H-T. Lihn [aut, cre]
 Maintainer: Stephen H-T. Lihn <stevelihn@gmail.com>
-Description: An implementation of the univariate elliptic distribution, and
-    lambda option pricing model. It provides detailed functionality and data
-    sets for the distribution and modelling. Especially, it contains functions
-    for the computation of density, probability, quantile, fitting procedures,
+Description: Elliptic lambda distribution and lambda option pricing model
+    have been evolved into a framework of
+    stable-law inspired distributions,
+    such as the extended stable lambda distribution for asset return,
+    stable count distribution for volatility,
+    and Lihn-Laplace process as a leptokurtic extension of Wiener process.
+    This package contains functions for the computation of
+    density, probability, quantile, random variable, fitting procedures,
     option prices, volatility smile. It also comes with sample financial data,
     and plotting routines.
-URL: http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2707810
+URL: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3046732
 Depends: R (>= 3.3.1)
-Imports: stats, utils, Rmpfr (>= 0.6-0), gsl, polynom, xts, zoo,
-        optimx, moments, parallel, graphics, methods, yaml, RSQLite,
-        digest
+Imports: stats, utils, Rmpfr (>= 0.6-0), gsl, RcppFaddeeva, polynom,
+        xts, zoo, optimx, moments, stabledist, parallel, graphics,
+        ggplot2, gridExtra, xtable, methods, yaml, RSQLite, digest
 Suggests: knitr, testthat, roxygen2, ghyp, fOptions, shape
 License: Artistic-2.0
 Encoding: latin1
@@ -80,8 +84,20 @@ Collate: 'ecd-adj-gamma-method.R' 'ecd-asymp-stats-method.R'
         'ecop-polyfit-option-method.R' 'ecop-read-csv-by-symbol.R'
         'ecop-term-master-calculator-method.R'
         'ecop-term-plot-3x3-method.R' 'ecop-vix-plot-3x3-method.R'
-RoxygenNote: 5.0.1
+        'lamp-class.R' 'lamp-constructor.R'
+        'lamp-generate-tau-method.R' 'lamp-k2mnt-method.R'
+        'lamp-laplace-distribution-method.R'
+        'lamp-lihnlap-distribution-method.R' 'lamp-plot-sim4-method.R'
+        'lamp-qsl-fit-config-method.R' 'lamp-qsl-fit-plot-method.R'
+        'lamp-sd-factor-method.R' 'lamp-simulate-iter-method.R'
+        'lamp-simulate1-method.R'
+        'lamp-stable-cnt-distribution-method.R'
+        'lamp-stable-lambda-dist-method.R'
+        'lamp-stable-rnd-walk-method.R' 'levy-dlambda-method.R'
+        'levy-domain-coloring-method.R'
+        'levy-dskewed-distribution-method.R'
+RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2017-01-06 22:06:52 UTC; slihn
+Packaged: 2017-10-02 23:12:46 UTC; slihn
 Repository: CRAN
-Date/Publication: 2017-01-06 23:30:45
+Date/Publication: 2017-10-03 19:57:50 UTC

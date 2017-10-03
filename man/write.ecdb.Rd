@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecdb-write-generic.R
 \docType{methods}
 \name{write.ecdb}
+\alias{write.ecdb}
 \alias{write}
 \alias{write,list,ecdb-method}
-\alias{write.ecdb}
 \title{Write API for the ecdb for a list of basic ecdattr objects}
 \usage{
 \method{write}{ecdb}(x, object)
@@ -25,4 +25,3 @@ The row count
 It takes a list of basic ecdattr objects, enrich them in parallel, then save them to ecdb.
 }
 \keyword{ecdb}
-

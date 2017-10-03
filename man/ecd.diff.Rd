@@ -27,4 +27,3 @@ d <- ecd.diff(c(10,20,30), c(1,2,3), pad=1)
 
 }
 \keyword{utility}
-

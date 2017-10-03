@@ -22,4 +22,3 @@ This contains the data points of a circular area defined by \code{R,theta}.
 If \code{cusp} is 1, data points are on the critical line specified by \code{R}.
 }
 \keyword{ecdattr}
-

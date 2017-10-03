@@ -45,8 +45,8 @@ if the object is to engage with OGF calculation.}
 \item{\code{status}}{numeric, bitmap recording the state of the calculation layers.
 1: bare bone; 2: ecd; 4: mu_D; 8: ecd_RN}
 }}
+
 \author{
 Stephen H. Lihn
 }
 \keyword{ecld}
-

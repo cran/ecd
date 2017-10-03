@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecdb-summary-generic.R
 \docType{methods}
 \name{summary.ecdb}
+\alias{summary.ecdb}
 \alias{summary}
 \alias{summary,ecdb-method}
-\alias{summary.ecdb}
 \title{Summary for the Elliptic DB (ECDB)}
 \usage{
 \method{summary}{ecdb}(object, ...)
@@ -28,4 +28,3 @@ summary(ecdb())
 Stephen H-T. Lihn
 }
 \keyword{ecdb}
-

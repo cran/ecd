@@ -13,7 +13,7 @@
 #' @param col_in      Character, the name of the input closing price column. Default: "Close"
 #' @param col_out     Character, the name of the output closing price column. Default: "Close"
 #' @param do.logr     logical, if \code{TRUE} (default), produce xts object of logr; otherwise, just the \code{col_out} column.
-#' @param rnd.zero    numeric, a small random factor to avoid an unreal peak of zero log-returns.
+#' @param rnd.zero    numeric, a small random factor (scaled to sd of logr) to avoid an unreal peak of zero log-returns.
 #'
 #' @return The xts object for the time series
 #'
@@ -36,7 +36,7 @@
                          rnd.zero = 0.01)
 {
     dates <- if (is.null(date_format)) as.Date(df[,dt]) else as.Date(df[,dt], date_format)
-    prices <- as.numeric(df[,col_in])
+    prices <- suppressWarnings(as.numeric(df[,col_in])) # suppressWarnings is for "NAs introduced by coercion"
     ts <- xts(prices, dates)
     colnames(ts) <- c(col_out)
     if (!do.logr) return(ts)
@@ -44,7 +44,7 @@
     # derive log returns
     ts$logr <- diff(log(ts))
     ts <- ts[!is.na(ts$logr)] # remove NA
-    sd <- rnorm(length(ts$logr), 0, sd(ts$logr))
+    sd <- rnorm(length(ts$logr), 0, sd(ts$logr))*rnd.zero
     ts$logr <- ts$logr+ifelse(ts$logr != 0, 0, sd)
     ts
 }

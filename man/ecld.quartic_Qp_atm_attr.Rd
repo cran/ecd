@@ -46,4 +46,3 @@ mupr <- -(ecld.quartic_SN0_max_RNV() - 0.2*sqrt(ttm))
 Stephen H-T. Lihn
 }
 \keyword{quartic}
-

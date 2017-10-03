@@ -20,6 +20,9 @@
 #' @export ecd.mpnum
 #' @export ecd.ifelse
 #' @export ecd.sapply
+#' @export ecd.mcsapply
+#'
+#' @importFrom parallel mclapply
 #'
 ### <======================================================================>
 "ecd.mpnum" <- function(object, x)
@@ -36,6 +39,12 @@
 #' @rdname ecd.mpnum
 "ecd.sapply" <- function(object, x, FUN, ...) {
     rs <- sapply(x, FUN, ...)
+    ecd.mpnum(object, rs)
+}
+### <---------------------------------------------------------------------->
+#' @rdname ecd.mpnum
+"ecd.mcsapply" <- function(object, x, FUN, ...) {
+    rs <- simplify2array(parallel::mclapply(x, FUN, ...))
     ecd.mpnum(object, rs)
 }
 ### <---------------------------------------------------------------------->

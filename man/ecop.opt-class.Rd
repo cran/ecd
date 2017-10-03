@@ -45,8 +45,8 @@ the type-specific (p or c) option data.
 
 \item{\code{IV}}{implied volatility from the vendor}
 }}
+
 \author{
 Stephen H. Lihn
 }
 \keyword{ecop}
-

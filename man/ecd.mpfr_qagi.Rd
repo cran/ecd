@@ -38,4 +38,3 @@ This utility requires (a) \code{lower} or \code{upper} is \code{+/-Inf};
 Stephen H. Lihn
 }
 \keyword{utility}
-

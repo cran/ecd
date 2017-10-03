@@ -44,6 +44,6 @@ These are core ecd parameters.}
 \code{short_name.skew}, \code{short_name}.
 This slot doesn't have formal use yet.}
 }}
+
 \keyword{class}
 \keyword{constructor}
-

@@ -36,4 +36,3 @@ dji <- ecd.fit_data("dji", FIT=T)
 }
 \keyword{fit}
 \keyword{sample-data}
-

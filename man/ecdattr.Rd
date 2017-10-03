@@ -31,4 +31,3 @@ b <- ecdattr(alpha=1, cusp=1)
 }
 \keyword{constructor}
 \keyword{ecdattr}
-

@@ -22,8 +22,8 @@ setClass for ecdb class
 Typical user should not have to modify this list 
 unless you need to generate more data for advanced research.}
 }}
+
 \author{
 Stephen H-T. Lihn
 }
 \keyword{ecdb}
-

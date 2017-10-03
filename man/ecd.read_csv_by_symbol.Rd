@@ -28,4 +28,3 @@ spx <- ecd.read_csv_by_symbol("spxoption2")
 Stephen H-T. Lihn
 }
 \keyword{data}
-

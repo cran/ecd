@@ -28,4 +28,3 @@ htu2 <- ecd.manage_hist_tails(htu, c(1,2))
 Stephen H-T. Lihn
 }
 \keyword{data}
-

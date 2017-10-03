@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-y-slope-generic.R
 \docType{methods}
 \name{y_slope.ecd}
+\alias{y_slope.ecd}
 \alias{y_slope}
 \alias{y_slope,ecd-method}
-\alias{y_slope.ecd}
 \title{Slope of \eqn{y(x)}}
 \usage{
 \method{y_slope}{ecd}(object, x)
@@ -33,4 +33,3 @@ yp <- y_slope(d,x)
 Stephen H. Lihn
 }
 \keyword{elliptic-curve}
-

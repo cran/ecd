@@ -32,4 +32,3 @@ x <- ecd.erfq(c(5,10,15), 1)
 y <- ecd.erfq(c(5,10,15), -1)
 }
 \keyword{utility}
-

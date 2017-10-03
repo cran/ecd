@@ -28,4 +28,3 @@ the location and value of maximum kurtosis is presented.
 Stephen H-T. Lihn
 }
 \keyword{utility}
-

@@ -3,9 +3,9 @@
 \name{ecld}
 \alias{ecld}
 \alias{ecld.from}
-\alias{ecld.from_sd}
-\alias{ecld.quartic}
 \alias{ecld.validate}
+\alias{ecld.quartic}
+\alias{ecld.from_sd}
 \title{Constructor of ecld class}
 \usage{
 ecld(lambda = 3, sigma = 1, beta = 0, mu = 0, epsilon = NaN,
@@ -83,4 +83,3 @@ ld <- ecld.from_sd(3, 0.1)
 Stephen H-T. Lihn
 }
 \keyword{constructor}
-

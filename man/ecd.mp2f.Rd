@@ -20,4 +20,3 @@ Convert mpfr to numeric primarily for display messages.
 x <- ecd.mp2f(ecd.mpfr(c(1,2,3)))
 }
 \keyword{utility}
-

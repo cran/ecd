@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecdb-bootstrap-generic.R
 \docType{methods}
 \name{bootstrap.ecdb}
+\alias{bootstrap.ecdb}
 \alias{bootstrap}
 \alias{bootstrap,ecdb-method}
-\alias{bootstrap.ecdb}
 \title{Bootstrap data for the Elliptic DB (ECDB)}
 \usage{
 \method{bootstrap}{ecdb}(object, action = "all", skip.existing = TRUE)
@@ -27,4 +27,3 @@ Row count.
 Main interface to generate data for ECDB based on the configuration.
 }
 \keyword{ecdb}
-

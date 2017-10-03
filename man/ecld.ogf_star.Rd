@@ -2,10 +2,10 @@
 % Please edit documentation in R/ecld-ogf-star-method.R
 \name{ecld.ogf_star}
 \alias{ecld.ogf_star}
-\alias{ecld.ogf_star_analytic}
+\alias{ecld.ogf_star_hgeo}
 \alias{ecld.ogf_star_exp}
 \alias{ecld.ogf_star_gamma_star}
-\alias{ecld.ogf_star_hgeo}
+\alias{ecld.ogf_star_analytic}
 \title{Star OGF of ecld}
 \usage{
 ecld.ogf_star(object, ki)
@@ -43,4 +43,3 @@ ecld.ogf_star(ld, ki)
 Stephen H-T. Lihn
 }
 \keyword{ogf}
-

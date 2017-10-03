@@ -39,4 +39,3 @@ ecd.ccdf(d,x)
 Stephen H. Lihn
 }
 \keyword{cdf}
-

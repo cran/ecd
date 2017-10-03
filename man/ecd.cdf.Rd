@@ -39,4 +39,3 @@ ecd.cdf(d,1, from.x = -1)
 Stephen H. Lihn
 }
 \keyword{cdf}
-

@@ -9,7 +9,7 @@
 #'
 #' @docType package
 #' @name ecd-package
-#' @import xts methods polynom graphics moments parallel yaml RSQLite
+#' @import xts methods polynom graphics moments stabledist parallel yaml RSQLite
 #' 
 NULL
 

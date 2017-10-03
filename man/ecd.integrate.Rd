@@ -40,4 +40,3 @@ multiple of \code{sigma}.
 Stephen H. Lihn
 }
 \keyword{utility}
-

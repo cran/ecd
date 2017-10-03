@@ -36,4 +36,3 @@ and returns an ecld object accordingly.
 Stephen H-T. Lihn
 }
 \keyword{fixed-point}
-

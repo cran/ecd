@@ -19,4 +19,3 @@ Protective commit after sending query to the elliptic database.
 Stephen H-T. Lihn
 }
 \keyword{ecdb}
-

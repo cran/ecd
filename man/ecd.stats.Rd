@@ -29,4 +29,3 @@ ecd.stats(d)
 Stephen H. Lihn
 }
 \keyword{statistics}
-

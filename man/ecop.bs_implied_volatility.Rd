@@ -46,4 +46,3 @@ ecop.bs_implied_volatility(V, K, S, ttm=T, div_yield=y, otype="c")
 # expect output of 12.8886\% and 29.4296\%
 }
 \keyword{ecop}
-

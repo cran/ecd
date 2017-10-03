@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecld-mu-D-method.R
 \name{ecld.mu_D}
 \alias{ecld.mu_D}
+\alias{ecld.mu_D_quartic}
 \alias{ecld.mu_D_by_sum}
 \alias{ecld.mu_D_integrate}
-\alias{ecld.mu_D_quartic}
 \title{mu_D of ecld}
 \usage{
 ecld.mu_D(object, validate = TRUE)
@@ -36,4 +36,3 @@ ecld.mu_D(ld)
 Stephen H. Lihn
 }
 \keyword{option-pricing}
-

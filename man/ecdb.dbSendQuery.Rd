@@ -23,4 +23,3 @@ This API is used for write operations such as CREATE and INSERT.
 Stephen H-T. Lihn
 }
 \keyword{ecdb}
-

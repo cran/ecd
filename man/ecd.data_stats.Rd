@@ -35,4 +35,3 @@ dji <- ecd.data_stats("dji")
 }
 \keyword{sample-data}
 \keyword{statistics}
-

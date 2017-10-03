@@ -36,4 +36,3 @@ For polar-q1, step size is 0.025 from 0 to 20 for log2(R), and integer angles, 0
 db <- ecdb("internal")
 }
 \keyword{constructor}
-

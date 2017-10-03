@@ -42,4 +42,3 @@ ecld.ivol_ogf_star(ld, 0)
 Stephen H-T. Lihn
 }
 \keyword{ogf}
-

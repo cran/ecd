@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-jinv-generic.R
 \docType{methods}
 \name{jinv.ecd}
+\alias{jinv.ecd}
 \alias{jinv}
 \alias{jinv,ecd-method}
-\alias{jinv.ecd}
 \title{J-invariant of the elliptic curve \eqn{y(x)}}
 \usage{
 \method{jinv}{ecd}(object, no.validate = FALSE)
@@ -33,4 +33,3 @@ j <- jinv(d)
 Stephen H-T. Lihn
 }
 \keyword{stats}
-

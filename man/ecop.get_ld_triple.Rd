@@ -44,4 +44,3 @@ ld1 <- lds$ld1
 Stephen H-T. Lihn
 }
 \keyword{constructor}
-

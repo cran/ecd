@@ -13,4 +13,3 @@ The option pricing API is using \code{ecop.} namespace.
 \author{
 Stephen H-T. Lihn
 }
-

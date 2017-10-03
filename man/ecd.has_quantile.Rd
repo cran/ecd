@@ -19,4 +19,3 @@ Whether the ecd object has quantile data or not. This is mostly for internal use
 Stephen H-T. Lihn
 }
 \keyword{distribution}
-

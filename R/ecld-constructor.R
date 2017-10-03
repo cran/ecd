@@ -222,8 +222,11 @@
     }
     sigma <- sigma * one
     object <- ecld(lambda=lambda, sigma=sigma, beta=beta, mu=mu)
-    object@mu_D <- ecld.mu_D(object)
-    
+    object@mu_D <- tryCatch(
+        ecld.mu_D(object),
+        error = function(cond) { return(NaN) }
+    )
+
     ecld.validate(object, sged.allowed=TRUE)
     return(object)
 }

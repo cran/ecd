@@ -44,4 +44,3 @@ ecld.imnt(ld,ki, 1)
 Stephen H-T. Lihn
 }
 \keyword{mgf}
-

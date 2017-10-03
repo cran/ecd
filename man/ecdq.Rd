@@ -27,4 +27,3 @@ Construct an ecdq class by providing the required parameters.
 Stephen H. Lihn
 }
 \keyword{constructor}
-

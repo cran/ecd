@@ -53,4 +53,3 @@ rec(100,d)
 Stephen H. Lihn
 }
 \keyword{distribution}
-

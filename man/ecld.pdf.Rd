@@ -27,4 +27,3 @@ Stephen H-T. Lihn
 }
 \keyword{distribution}
 \keyword{pdf}
-

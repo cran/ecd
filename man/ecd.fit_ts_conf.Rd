@@ -35,4 +35,3 @@ d <- ecd.fit_ts_conf(ts, conf)
 }
 \keyword{fit}
 \keyword{timeseries}
-

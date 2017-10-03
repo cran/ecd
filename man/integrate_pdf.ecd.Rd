@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-integrate-pdf-generic.R
 \docType{methods}
 \name{integrate_pdf.ecd}
+\alias{integrate_pdf.ecd}
 \alias{integrate_pdf}
 \alias{integrate_pdf,ecd-method}
-\alias{integrate_pdf.ecd}
 \title{Integrate a function with PDF of the distribution}
 \usage{
 \method{integrate_pdf}{ecd}(object, f, lower, upper, ..., show.warning = TRUE,
@@ -48,4 +48,3 @@ Stephen H. Lihn
 }
 \keyword{integrate}
 \keyword{pdf}
-

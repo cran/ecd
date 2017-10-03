@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-ellipticity-generic.R
 \docType{methods}
 \name{ellipticity.ecd}
+\alias{ellipticity.ecd}
 \alias{ellipticity}
 \alias{ellipticity,ecd-method}
-\alias{ellipticity.ecd}
 \title{Ellipticity of ecd object}
 \usage{
 \method{ellipticity}{ecd}(object, tol = 1e-04)
@@ -31,4 +31,3 @@ d <- ecd(0,1)
 ellipticity(d)
 }
 \keyword{ellipticity}
-

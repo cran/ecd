@@ -18,4 +18,3 @@ This function is computationally heavy. So the objects are often wrapped in a li
 and computed via \code{parallel::mclapply}.
 }
 \keyword{ecdattr}
-

@@ -34,4 +34,3 @@ ecd.ogf(d, k, "c")
 Stephen H. Lihn
 }
 \keyword{option}
-

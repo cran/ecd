@@ -2,8 +2,8 @@
 % Please edit documentation in R/ecd-solve-generic.R
 \docType{methods}
 \name{solve.ecd}
-\alias{solve,ecd-method}
 \alias{solve.ecd}
+\alias{solve,ecd-method}
 \title{Solve the elliptic curve \eqn{y(x)}}
 \usage{
 \method{solve}{ecd}(a, b, ...)
@@ -32,4 +32,3 @@ y <- solve(d,x)
 }
 \keyword{polynomial}
 \keyword{solve}
-

@@ -43,4 +43,3 @@ Stephen H. Lihn
 \keyword{constructor}
 \keyword{cusp}
 \keyword{ecd}
-

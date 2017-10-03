@@ -32,15 +32,18 @@
     s <- object@sigma
     mu <- object@mu
     cusp <- object@cusp
+    L <- object@lambda
     
     # ----------------
     xi <- (x-mu)/s
 
     if (r==0) { # this includes std cusp
         a1 <- a-xi^2
-        return(sign(a1)*abs(a1)^(1/3))
+        return(sign(a1)*abs(a1)^(1/L))
     }    
     # ----------------
+    if (L != 3) stop("Can not support lambda != 3")
+    
     f1 <- (xi^2 - a)/2 
     
     f2_core <- 27*xi^4 - 54*a*xi^2 + 27*a^2 + 4*r^3

@@ -22,7 +22,7 @@ Default: "\code{\%m/\%d/\%Y}".}
 
 \item{do.logr}{logical, if \code{TRUE} (default), produce xts object of logr; otherwise, just the \code{col_out} column.}
 
-\item{rnd.zero}{numeric, a small random factor to avoid an unreal peak of zero log-returns.}
+\item{rnd.zero}{numeric, a small random factor (scaled to sd of logr) to avoid an unreal peak of zero log-returns.}
 }
 \value{
 The xts object for the time series
@@ -41,4 +41,3 @@ ecd.df2ts(df)
 \keyword{sample-data}
 \keyword{timeseries}
 \keyword{xts}
-

@@ -30,4 +30,3 @@ to the same interface.
 Stephen H. Lihn
 }
 \keyword{utility}
-

@@ -37,4 +37,3 @@ The thrid plot is the implied volatility and fits.
 Stephen H-T. Lihn
 }
 \keyword{plot}
-

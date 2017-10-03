@@ -39,7 +39,12 @@
 
     # handle lambda model
     if ( a@lambda != 3 ) {
-        if ( a@alpha != 0 | a@gamma != 0 ) stop("Lambda-model must have zero alpha and gamma!") 
+        if ( a@beta == 0 & a@alpha != 0 & a@gamma == 0 ) {
+            # this is +/-y^lambda + alpha = xi^2
+            return(solve_sym.ecd(a,b))
+        }
+        
+        if ( a@alpha != 0 | a@gamma != 0 ) stop("Lambda-model must have zero alpha and gamma!")
 
         if ( a@beta == 0 ) {
 			xi <- (b-a@mu)/a@sigma

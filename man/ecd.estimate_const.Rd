@@ -22,4 +22,3 @@ ecd.estimate_const(ecd(100,100, sigma=0.1, bare.bone=TRUE))
 
 }
 \keyword{constructor}
-

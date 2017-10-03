@@ -29,4 +29,3 @@ alpha <- ecd.cusp_r2a(gamma=1)
 Stephen H-T. Lihn
 }
 \keyword{cusp}
-

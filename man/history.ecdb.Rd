@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecdb-history-generic.R
 \docType{methods}
 \name{history.ecdb}
+\alias{history.ecdb}
 \alias{history}
 \alias{history,ecdb-method}
-\alias{history.ecdb}
 \title{List of history in the Elliptic DB}
 \usage{
 \method{history}{ecdb}(object)
@@ -26,4 +26,3 @@ List of unique history reflecting the bootstrap activities.
 Stephen H-T. Lihn
 }
 \keyword{ecdb}
-

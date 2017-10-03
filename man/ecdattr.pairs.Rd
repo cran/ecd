@@ -22,4 +22,3 @@ This contains the data points of a rectangular area defined by \code{alpha,gamma
 If \code{cusp} is 1, data points are on the critical line specified by \code{alpha}.
 }
 \keyword{ecdattr}
-

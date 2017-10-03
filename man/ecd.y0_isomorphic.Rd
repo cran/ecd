@@ -27,4 +27,3 @@ ecd.y0_isomorphic(t)
 
 }
 \keyword{solve}
-

@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-solve-sym-generic.R
 \docType{methods}
 \name{solve_sym.ecd}
+\alias{solve_sym.ecd}
 \alias{solve_sym}
 \alias{solve_sym,ecd-method}
-\alias{solve_sym.ecd}
 \title{Analytic solution for a symmetric elliptic curve}
 \usage{
 \method{solve_sym}{ecd}(object, x)
@@ -33,4 +33,3 @@ y <- solve_sym(d,x)
 Stephen H-T. Lihn
 }
 \keyword{solve}
-

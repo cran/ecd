@@ -4,19 +4,31 @@
 \alias{ecd.rational}
 \title{Utility to convert a numeric to a rational}
 \usage{
-ecd.rational(x)
+ecd.rational(x, pref.denominator = numeric(0), cycles = 10,
+  max.denominator = 500, as.character = FALSE)
 }
 \arguments{
 \item{x}{numeric}
+
+\item{pref.denominator}{numeric, a list of preferred integer denominators to conform to, default is \code{numeric(0)}.}
+
+\item{cycles}{numeric, maximum number of steps, default is 10.}
+
+\item{max.denominator}{numeric, maximum denominator when the loop of trial should stop, default is 500.}
+
+\item{as.character}{logical, if specified, convert to character of p/q, default is \code{FALSE}.}
 }
 \value{
-a vector of two integers, representing numerator and denominator
+vector of two integers, representing numerator and denominator. 
+        If as.character is true, then return character instead of the rational pair.
+        If x is a vector and as.character is false, return a matrix of length(x) by 2.
 }
 \description{
-Convert a numeric x to rational p/q, which is then used for polynomial construction
+Convert a numeric x to rational p/q, which is then used for polynomial construction.
+It can be used for displaying the time as fraction of a year too.
 }
 \examples{
-pq <- ecd.rational(2.5)
+pq1 <- ecd.rational(2.5)
+pq2 <- ecd.rational(1/250)
 }
 \keyword{solve}
-

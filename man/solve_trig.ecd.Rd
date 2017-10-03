@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-solve-trig-generic.R
 \docType{methods}
 \name{solve_trig.ecd}
+\alias{solve_trig.ecd}
 \alias{solve_trig}
 \alias{solve_trig,ecd-method}
-\alias{solve_trig.ecd}
 \title{Trigonometric solution for a elliptic curve}
 \usage{
 \method{solve_trig}{ecd}(object, x)
@@ -33,4 +33,3 @@ y <- solve_trig(d,x)
 Stephen H-T. Lihn
 }
 \keyword{solve}
-

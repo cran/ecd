@@ -2,10 +2,10 @@
 % Please edit documentation in R/ecld-fixed-point-RN0-method.R
 \name{ecld.fixed_point_SN0_atm_ki}
 \alias{ecld.fixed_point_SN0_atm_ki}
-\alias{ecld.fixed_point_SN0_atm_ki_sd}
-\alias{ecld.fixed_point_SN0_lambda_skew_ratio}
 \alias{ecld.fixed_point_SN0_rho_sd}
+\alias{ecld.fixed_point_SN0_atm_ki_sd}
 \alias{ecld.fixed_point_SN0_skew}
+\alias{ecld.fixed_point_SN0_lambda_skew_ratio}
 \title{The ATM RNO related constants and calculations in fixed point model}
 \usage{
 ecld.fixed_point_SN0_atm_ki(lambda)
@@ -37,4 +37,3 @@ under the RNO measure in the fixed point model.
 Stephen H-T. Lihn
 }
 \keyword{ATM}
-

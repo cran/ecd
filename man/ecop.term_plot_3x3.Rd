@@ -2,10 +2,10 @@
 % Please edit documentation in R/ecop-term-plot-3x3-method.R
 \docType{data}
 \name{ecop.term_plot_3x3}
-\alias{ecop.term_idx_range}
 \alias{ecop.term_plot_3x3}
-\alias{ecop.term_realized_days}
 \alias{ecop.term_target_days_default}
+\alias{ecop.term_realized_days}
+\alias{ecop.term_idx_range}
 \title{Produce 3x3 plot of volatility smiles for a date}
 \format{An object of class \code{numeric} of length 8.}
 \usage{
@@ -45,4 +45,3 @@ This utlity produces 3x3 plot of volatility smiles for a date. It is used for th
 \keyword{datasets}
 \keyword{structure}
 \keyword{term}
-

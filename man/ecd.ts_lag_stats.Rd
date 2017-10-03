@@ -31,4 +31,3 @@ dji <- ecd.ts_lag_stats(ecd.data("dji"), 2)
 }
 \keyword{sample-data}
 \keyword{statistics}
-

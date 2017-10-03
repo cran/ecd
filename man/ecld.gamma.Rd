@@ -2,8 +2,8 @@
 % Please edit documentation in R/ecld-gamma-method.R
 \name{ecld.gamma}
 \alias{ecld.gamma}
-\alias{ecld.gamma_2F0}
 \alias{ecld.gamma_hgeo}
+\alias{ecld.gamma_2F0}
 \title{Incomplete gamma function and asymptotic expansion}
 \usage{
 ecld.gamma(s, x = 0, na.stop = TRUE)
@@ -37,4 +37,3 @@ in the star OGF expansion.
 Stephen H-T. Lihn
 }
 \keyword{gamma}
-

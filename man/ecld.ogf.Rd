@@ -2,11 +2,11 @@
 % Please edit documentation in R/ecld-ogf-method.R
 \name{ecld.ogf}
 \alias{ecld.ogf}
+\alias{ecld.ogf_quartic}
+\alias{ecld.ogf_integrate}
 \alias{ecld.ogf_gamma}
 \alias{ecld.ogf_imnt_sum}
-\alias{ecld.ogf_integrate}
 \alias{ecld.ogf_log_slope}
-\alias{ecld.ogf_quartic}
 \title{Option generating function (OGF) of ecld}
 \usage{
 ecld.ogf(object, k, otype = "c", RN = TRUE)
@@ -51,4 +51,3 @@ ecld.ogf(ld,k)
 Stephen H-T. Lihn
 }
 \keyword{ogf}
-

@@ -28,7 +28,7 @@ setClass for ecdq class, the quantile generator
 
 \item{\code{conf}}{list of miscelaneous configurations. For debugging purpose.}
 }}
+
 \keyword{class}
 \keyword{constructor}
 \keyword{ecdq}
-

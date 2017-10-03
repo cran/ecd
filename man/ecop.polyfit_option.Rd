@@ -32,4 +32,3 @@ the calculation of log-slope of option prices.
 Stephen H-T. Lihn
 }
 \keyword{ecop}
-

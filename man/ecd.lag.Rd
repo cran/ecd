@@ -25,4 +25,3 @@ x <- ecd.lag(c(1,2,3))
 y <- ecd.lag(ecd.mpfr(c(1,2,3)))
 }
 \keyword{utility}
-

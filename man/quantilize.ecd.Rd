@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-quantilize-generic.R
 \docType{methods}
 \name{quantilize.ecd}
+\alias{quantilize.ecd}
 \alias{quantilize}
 \alias{quantilize,ecd-method}
-\alias{quantilize.ecd}
 \title{Add the quantile data to the ecd object}
 \usage{
 \method{quantilize}{ecd}(object, show.warning = FALSE)
@@ -35,4 +35,3 @@ Add the quantile data to the ecd object if it is not created yet.
 Stephen H-T. Lihn
 }
 \keyword{distribution}
-

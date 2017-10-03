@@ -41,8 +41,8 @@ for a more generic container.
 
 \item{\code{call_conf}}{list, the call configuration}
 }}
+
 \author{
 Stephen H-T. Lihn
 }
 \keyword{ecop}
-

@@ -22,4 +22,3 @@ ecd.toString(ecd(-1,1, sigma=0.1))
 
 }
 \keyword{constructor}
-

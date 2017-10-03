@@ -45,4 +45,3 @@ Stephen H. Lihn
 }
 \keyword{constructor}
 \keyword{ecd}
-

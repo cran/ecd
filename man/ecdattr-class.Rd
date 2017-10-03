@@ -35,5 +35,5 @@ additional \code{ecd} attributes.
 
 \item{\code{attr}}{list of attributes. They are \code{NULL} protected for SQLite.}
 }}
-\keyword{ecdattr}
 
+\keyword{ecdattr}

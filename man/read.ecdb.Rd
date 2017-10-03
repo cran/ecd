@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecdb-read-generic.R
 \docType{methods}
 \name{read.ecdb}
+\alias{read.ecdb}
 \alias{read}
 \alias{read,ecdb-method}
-\alias{read.ecdb}
 \title{Read API for the ecdb}
 \usage{
 \method{read}{ecdb}(object, alpha = NULL, gamma = NULL, alim = NULL,
@@ -42,4 +42,3 @@ point by point, or both. If both are specified, it follows a similar logic as pl
 how \code{x,y} is scoped by \code{xlim,ylim}.
 }
 \keyword{ecdb}
-

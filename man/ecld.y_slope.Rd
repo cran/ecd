@@ -34,4 +34,3 @@ ecld.y_slope_trunc(ld)
 Stephen H-T. Lihn
 }
 \keyword{y_slope}
-

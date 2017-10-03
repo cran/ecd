@@ -23,4 +23,3 @@ ecld.const(ld)
 Stephen H. Lihn
 }
 \keyword{ecld}
-

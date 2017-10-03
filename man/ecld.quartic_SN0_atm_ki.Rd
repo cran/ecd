@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecld-quartic-RN0-method.R
 \name{ecld.quartic_SN0_atm_ki}
 \alias{ecld.quartic_SN0_atm_ki}
-\alias{ecld.quartic_SN0_max_RNV}
 \alias{ecld.quartic_SN0_rho_stdev}
 \alias{ecld.quartic_SN0_skew}
+\alias{ecld.quartic_SN0_max_RNV}
 \title{The ATM RNO related constants and calculations in quartic model}
 \usage{
 ecld.quartic_SN0_atm_ki()
@@ -30,4 +30,3 @@ Computes the maximum risk-neutral violation as an extension of RN0 measure.
 Stephen H-T. Lihn
 }
 \keyword{ATM}
-

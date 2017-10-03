@@ -2,9 +2,9 @@
 % Please edit documentation in R/ecd-discr-generic.R
 \docType{methods}
 \name{discr.ecd}
+\alias{discr.ecd}
 \alias{discr}
 \alias{discr,ecd-method}
-\alias{discr.ecd}
 \title{Discriminant of the elliptic curve \eqn{y(x)}}
 \usage{
 \method{discr}{ecd}(object, no.validate = FALSE)
@@ -34,4 +34,3 @@ discr(d)
 Stephen H-T. Lihn
 }
 \keyword{stats}
-

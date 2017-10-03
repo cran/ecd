@@ -66,8 +66,8 @@
 
     # assertion for lambda
     if( lambda != 3){
-        if ( alpha != 0 | gamma != 0 ) {
-            stop("When lambda is not 3, alpha and gamma must be zero!\n")
+        if ( gamma != 0 ) {
+            stop("When lambda is not 3, gamma must be zero!\n")
         }
     }
     
