@@ -7,15 +7,28 @@
 \alias{ecld.op_VL_quartic}
 \title{The O, V, U operators in option pricing model}
 \usage{
-ecld.op_V(L, k, otype = "c", ttm = NaN, rho = 0, stop.on.na = FALSE,
-  use.mc = TRUE)
+ecld.op_V(
+  L,
+  k,
+  otype = "c",
+  ttm = NaN,
+  rho = 0,
+  stop.on.na = FALSE,
+  use.mc = TRUE
+)
 
 ecld.op_O(sigma1, k, otype = "c", rho = 0)
 
 ecld.op_U_lag(L, k, sd, n = 2)
 
-ecld.op_VL_quartic(object, k, otype = "c", ttm = NaN, stop.on.na = FALSE,
-  use.mc = TRUE)
+ecld.op_VL_quartic(
+  object,
+  k,
+  otype = "c",
+  ttm = NaN,
+  stop.on.na = FALSE,
+  use.mc = TRUE
+)
 }
 \arguments{
 \item{L}{numeric, a vector of normalized local option prices}

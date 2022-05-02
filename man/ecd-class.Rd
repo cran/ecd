@@ -5,7 +5,7 @@
 \alias{ecd-class}
 \title{The ecd class}
 \description{
-This S4 class is the major object class for elliptic distribution.
+This S4 class is the major object class for elliptic lambda distribution.
 It stores the ecd parameters, numerical constants that facilitates
 quadpack integration, statistical attributes, and optionally,
 an internal structure for the quantile function.
@@ -45,5 +45,37 @@ These are core ecd parameters.}
 This slot doesn't have formal use yet.}
 }}
 
+\section{Details}{
+
+  The elliptic lambda distribution is the early research target of what becomes the stable 
+  lambda distribution. It is inspired from elliptic curve, and is defined by a depressed cubic polynomial, 
+  \deqn{
+    -y(z)^3 - \left(\gamma+\beta z\right) y(z) + \alpha = z^2,
+  }
+  where \eqn{y(z)} must approach minus infinity as \eqn{z} approaches plus or minus infinity.
+  The density function is defined as \deqn{
+    P\left(x; \alpha, \gamma, \sigma, \beta, \mu\right)
+    \equiv\, \frac{1}{C\,\sigma} 
+    e^{y\left(\left|\frac{x-\mu}{\sigma}\right|\right)},
+  }
+  and \eqn{C} is the normalization constant,\deqn{
+    C = \int_{-\infty}^{\infty}e^{y(z)}\,dz,
+  }
+  where 
+  \eqn{\alpha} and \eqn{\gamma} are the shape parameters, 
+  \eqn{\sigma} is the scale parameter, 
+  \eqn{\beta} is the asymmetric parameter, 
+  \eqn{\mu} is the location parameter.
+}
+
+\references{
+For elliptic lambda distribution, see 
+  Stephen Lihn (2015). 
+  \emph{On the Elliptic Distribution and Its Application to Leptokurtic Financial Data}.
+  SSRN: \url{https://www.ssrn.com/abstract=2697911}
+}
+\author{
+Stephen H. Lihn
+}
 \keyword{class}
 \keyword{constructor}

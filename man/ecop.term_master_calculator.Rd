@@ -6,8 +6,14 @@
 \alias{ecop.term_atm}
 \title{Master calculator for all the analytics of volatility smiles required for a date}
 \usage{
-ecop.term_master_calculator(symbol, date_str, int_rate = 0, div_yield = 0,
-  config_file = NULL, extdata_dir = NULL)
+ecop.term_master_calculator(
+  symbol,
+  date_str,
+  int_rate = 0,
+  div_yield = 0,
+  config_file = NULL,
+  extdata_dir = NULL
+)
 
 ecop.smile_data_calculator(idx, df_day, master, int_rate, div_yield, otype)
 

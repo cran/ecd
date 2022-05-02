@@ -141,8 +141,8 @@
 #' @rdname ecld.op_V
 "ecld.op_U_lag" <- function(L, k, sd, n=2)
 {
-    if (class(sd)=="ecld") sd <- ecld.sd(sd)
-    else if (class(sd)=="ecd") sd <- ecd.sd(sd)
+    if (is(sd,"ecld")) sd <- ecld.sd(sd)
+    else if (is(sd,"ecd")) sd <- ecd.sd(sd)
     
     n2 <- floor(n/2)
     logL <- log(L)

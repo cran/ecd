@@ -4,8 +4,14 @@
 \alias{ecd.cdf}
 \title{CDF of ecd}
 \usage{
-ecd.cdf(object, x, from.x = -Inf, piece.wise = FALSE, f = NULL,
-  verbose = FALSE)
+ecd.cdf(
+  object,
+  x,
+  from.x = -Inf,
+  piece.wise = FALSE,
+  f = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{object}{An object of ecd class}

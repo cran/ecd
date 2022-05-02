@@ -1,8 +1,8 @@
 #' Solve the elliptic curve \eqn{y(x)}
-#' 
+#'
 #' Solve the elliptic curve \eqn{y(x)} by constructing
 #' a cubic polynomial from ecd object. Then solve it
-#' and take the smallest real root. 
+#' and take the smallest real root.
 #'
 #' @method solve ecd
 #'
@@ -14,24 +14,26 @@
 #'
 #' @keywords polynomial solve
 #'
-#' @export solve
-#'
 #' @examples
 #' d <- ecd()
 #' x <- seq(-100,100,by=0.1)
 #' y <- solve(d,x)
 
 ### <======================================================================>
+#'
+#' @export ecd solve
+#' @export solve.ecd
+#' @export
 "solve.ecd" <- function(a, b, ...)
 {
 
     # handle cusp
     cusp <- a@cusp
-    
+
     # allow cusp error <= 1e-7, validated for alpha up to -100
     # this is okay since cusp should have only single real root everywhere on x.
     eps <- ifelse(cusp > 0, ifelse(a@alpha<100,1e-7,1e-7*log(a@alpha)^2), 0)
-    
+
     get_real <- function(roots) {
         real_roots <- roots[abs(Im(roots)) <= eps]
         min(Re(real_roots))
@@ -43,7 +45,7 @@
             # this is +/-y^lambda + alpha = xi^2
             return(solve_sym.ecd(a,b))
         }
-        
+
         if ( a@alpha != 0 | a@gamma != 0 ) stop("Lambda-model must have zero alpha and gamma!")
 
         if ( a@beta == 0 ) {
@@ -52,14 +54,14 @@
 		} else {
             # this is handling the cases outside of analytic coverage in ecld.solve()
             # e.g. lambda = 2,4 have already been handled there
-            
+
             #return(ecld.solve_by_poly(a,b))
             return(ecld.solve_isomorphic(a,b))
         }
     }
 
 	# standard cubic case
-	
+
     all_roots <- ecd.cubic(a, b)
     simplify2array(lapply(all_roots, get_real))
 }

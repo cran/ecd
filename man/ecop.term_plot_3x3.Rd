@@ -7,10 +7,18 @@
 \alias{ecop.term_realized_days}
 \alias{ecop.term_idx_range}
 \title{Produce 3x3 plot of volatility smiles for a date}
-\format{An object of class \code{numeric} of length 8.}
+\format{
+An object of class \code{numeric} of length 8.
+}
 \usage{
-ecop.term_plot_3x3(term_data, date_str, trim_points = 151,
-  target_days = NULL, add.first.day = TRUE, show.put.bid = FALSE)
+ecop.term_plot_3x3(
+  term_data,
+  date_str,
+  trim_points = 151,
+  target_days = NULL,
+  add.first.day = TRUE,
+  show.put.bid = FALSE
+)
 
 ecop.term_target_days_default
 

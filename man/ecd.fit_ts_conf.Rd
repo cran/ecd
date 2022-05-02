@@ -4,8 +4,15 @@
 \alias{ecd.fit_ts_conf}
 \title{Timeseries fitting utility}
 \usage{
-ecd.fit_ts_conf(ts, conf, iter = 1000, FIT = FALSE, EPS = FALSE,
-  eps_file = NULL, qa.fit = FALSE)
+ecd.fit_ts_conf(
+  ts,
+  conf,
+  iter = 1000,
+  FIT = FALSE,
+  EPS = FALSE,
+  eps_file = NULL,
+  qa.fit = FALSE
+)
 }
 \arguments{
 \item{ts}{An xts object from either \code{ecd.data} or \code{ecd.df2ts}.}

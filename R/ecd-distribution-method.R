@@ -8,7 +8,7 @@
 #' @param x numeric vector of quantiles.
 #' @param q numeric vector of quantiles.
 #' @param n number of observations.
-#' @param object an object of ecd class. 
+#' @param object an object of \code{\link{ecd-class}}. 
 #'               To achieve high performance for \code{qec} and \code{rec}, 
 #'               it should be created with \code{with.quantile=TRUE}.
 #' @param debug logical, whether to print debug message, default is \code{FALSE}.

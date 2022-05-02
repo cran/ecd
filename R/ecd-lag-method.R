@@ -26,7 +26,7 @@ ecd.lag <- function(x, shift=1, na.omit=FALSE)
     if (shift == 0) return(x)
     
     ret <- rep(NaN, xLen)
-    if (class(x) == "mpfr") {
+    if (is(x, "mpfr")) {
         ret <- ecd.mpfr(ret)
     }    
     if (abs(shift) < xLen) {

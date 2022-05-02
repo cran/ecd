@@ -8,12 +8,27 @@
 \alias{ecld.from_sd}
 \title{Constructor of ecld class}
 \usage{
-ecld(lambda = 3, sigma = 1, beta = 0, mu = 0, epsilon = NaN,
-  rho = NaN, with.ecd = FALSE, with.mu_D = FALSE, with.RN = FALSE,
-  is.sged = FALSE, verbose = FALSE)
+ecld(
+  lambda = 3,
+  sigma = 1,
+  beta = 0,
+  mu = 0,
+  epsilon = NaN,
+  rho = NaN,
+  with.ecd = FALSE,
+  with.mu_D = FALSE,
+  with.RN = FALSE,
+  is.sged = FALSE,
+  verbose = FALSE
+)
 
-ecld.from(object, with.ecd = FALSE, with.mu_D = FALSE, with.RN = FALSE,
-  verbose = FALSE)
+ecld.from(
+  object,
+  with.ecd = FALSE,
+  with.mu_D = FALSE,
+  with.RN = FALSE,
+  verbose = FALSE
+)
 
 ecld.validate(object, sged.allowed = FALSE, sged.only = FALSE)
 
@@ -66,7 +81,7 @@ Must be positive. Default: 1.}
 an object of ecld class
 }
 \description{
-Construct an ecld class by providing the required parameters.
+Construct an \code{\link{ecld-class}} by providing the required parameters.
 The default is the standard symmetric cusp distribution.
 The default also doesn't calculate any ecd extension.
 \code{ecld.from} allows you to pass the parameters from an existing ecd object.

@@ -4,9 +4,16 @@
 \alias{ecd.integrate}
 \title{Wrapper to integrate numeric and mpfr}
 \usage{
-ecd.integrate(object, f, lower, upper, ...,
-  abs.tol = .Machine$double.eps^0.25, mpfr.qagi = TRUE,
-  show.warning = TRUE)
+ecd.integrate(
+  object,
+  f,
+  lower,
+  upper,
+  ...,
+  abs.tol = .Machine$double.eps^0.25,
+  mpfr.qagi = TRUE,
+  show.warning = TRUE
+)
 }
 \arguments{
 \item{object}{An object of ecd class. This object can be bare-boned.}

@@ -4,8 +4,13 @@
 \alias{ecd.rational}
 \title{Utility to convert a numeric to a rational}
 \usage{
-ecd.rational(x, pref.denominator = numeric(0), cycles = 10,
-  max.denominator = 500, as.character = FALSE)
+ecd.rational(
+  x,
+  pref.denominator = numeric(0),
+  cycles = 10,
+  max.denominator = 500,
+  as.character = FALSE
+)
 }
 \arguments{
 \item{x}{numeric}

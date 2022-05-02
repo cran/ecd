@@ -4,9 +4,16 @@
 \alias{ecd.cusp}
 \title{Cusp constructor of ecd class}
 \usage{
-ecd.cusp(alpha = NaN, gamma = NaN, sigma = 1, mu = 0,
-  with.stats = TRUE, with.quantile = FALSE, bare.bone = FALSE,
-  verbose = FALSE)
+ecd.cusp(
+  alpha = NaN,
+  gamma = NaN,
+  sigma = 1,
+  mu = 0,
+  with.stats = TRUE,
+  with.quantile = FALSE,
+  bare.bone = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{alpha}{numeric, the flatness parameter. Default: NaN.}

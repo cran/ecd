@@ -1,15 +1,22 @@
-#' ecd: A package for the elliptic distribution.
+#' ecd: A package for the stable lambda distribution family.
 #'
-#' The ecd package provides the core class and functions to calculate 
-#' the elliptic distribution. They are either generic or use \code{ecd.} namespace.
-#' The lambda distribution is using \code{ecld.} namespace. SGED is considered part of ecld.
-#' The option pricing API is using \code{ecop.} namespace.
-#'
+#' The ecd package provides the core classes and functions for the stable lambda distribution family.
+#' The stable lambda distribution is implemented in \code{\link{dsl}} section.
+#' The lambda distribution uses the \code{ecld} namespace. SGED is considered part of ecld.
+#' (See \code{\link{ecld-class}} for definition.)
+#' The original elliptic lambda distribution uses the generic methods or \code{ecd} namespace. 
+#' (See \code{\link{ecd-class}} for definition.)
+#' The option pricing API uses the \code{ecop} namespace.
+#' (See \code{\link{ecop-class}} for definition.)
+#' Most helper utilities are named under either \code{ecd} or \code{ecld}.
+#' 
 #' @author Stephen H-T. Lihn
 #'
 #' @docType package
 #' @name ecd-package
 #' @import xts methods polynom graphics moments stabledist parallel yaml RSQLite
+#' 
+#' @seealso The two main classes are \code{\link{ecd-class}} and \code{\link{ecld-class}}
 #' 
 NULL
 

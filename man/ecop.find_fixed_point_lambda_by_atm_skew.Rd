@@ -5,9 +5,18 @@
 \alias{ecop.find_fixed_point_lambda_by_atm_skew}
 \title{Utility to find the fixed point lambda that matches ATM skew}
 \usage{
-ecop.find_fixed_point_lambda_by_atm_skew(fn_get_ld1, lambda, step, atm_skew,
-  k_atm, ttm, otype = "c", verbose = TRUE, msg_prefix = "",
-  min_lambda = 1.1)
+ecop.find_fixed_point_lambda_by_atm_skew(
+  fn_get_ld1,
+  lambda,
+  step,
+  atm_skew,
+  k_atm,
+  ttm,
+  otype = "c",
+  verbose = TRUE,
+  msg_prefix = "",
+  min_lambda = 1.1
+)
 }
 \arguments{
 \item{fn_get_ld1}{function, takes stdev, lambda, beta as input, return ld1 object

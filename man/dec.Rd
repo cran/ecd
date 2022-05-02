@@ -18,7 +18,7 @@ rec(n, object = ecd(with.quantile = TRUE))
 \arguments{
 \item{x}{numeric vector of quantiles.}
 
-\item{object}{an object of ecd class. 
+\item{object}{an object of \code{\link{ecd-class}}. 
 To achieve high performance for \code{qec} and \code{rec}, 
 it should be created with \code{with.quantile=TRUE}.}
 

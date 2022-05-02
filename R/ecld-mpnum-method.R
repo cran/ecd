@@ -27,7 +27,7 @@
 {
     if (object@use.mpfr) return(ecd.mpfr(x))
     # deal with numeric complication from mclapply
-    if (class(x)=="list") return(simplify2array(x))
+    if (is(x,"list")) return(simplify2array(x))
     return(x)
 }
 ### <---------------------------------------------------------------------->

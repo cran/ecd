@@ -4,8 +4,15 @@
 \alias{ecop.get_ld_triple}
 \title{Get triple list of ecld objects by stdev}
 \usage{
-ecop.get_ld_triple(lambda = 3, sd = 1, beta = 0, mu_plus_ratio = 0,
-  epsilon_ratio = 0, atm_imp_k = NaN, fn_shift = NULL)
+ecop.get_ld_triple(
+  lambda = 3,
+  sd = 1,
+  beta = 0,
+  mu_plus_ratio = 0,
+  epsilon_ratio = 0,
+  atm_imp_k = NaN,
+  fn_shift = NULL
+)
 }
 \arguments{
 \item{lambda}{numeric, the lambda parameter. Must be positive. Default: 3.}

@@ -17,7 +17,7 @@ spx-1d:
   ts.on:  days
   lag:    1
   drop:   1
-  t:      1/250
+  t:      1/252
   nu0:    6.92
   theta:  1.17
   convo:  2
@@ -31,7 +31,7 @@ spx-2d:
   ts.on:  days
   lag:    2
   drop:   1
-  t:      2/250
+  t:      2/252
   nu0:    9.0
   theta:  0.96
   convo:  2
@@ -45,7 +45,7 @@ spx-3d:
   ts.on:  days
   lag:    3
   drop:   2
-  t:      3/250
+  t:      3/252
   nu0:    8.9
   theta:  0.91
   convo:  3
@@ -59,7 +59,7 @@ spx-4d:
   ts.on:  days
   lag:    4
   drop:   2
-  t:      4/250
+  t:      4/252
   nu0:    9.4
   theta:  0.86
   convo:  3
@@ -73,7 +73,7 @@ spx-5d:
   ts.on:  days
   lag:    5
   drop:   2
-  t:      5/250
+  t:      5/252
   nu0:    9.2
   theta:  0.84
   convo:  3
@@ -281,7 +281,7 @@ spx-12m:
   symbol: spx
   period: 12m
   ts.on:  days
-  lag:    250
+  lag:    252
   drop:   0
   t:      1
   nu0:    9.85
@@ -327,7 +327,7 @@ dji-1d:
   ts.on:  days
   lag:    1
   drop:   1
-  t:      1/250
+  t:      1/252
   nu0:    6.92
   theta:  1.21
   convo:  2
@@ -343,7 +343,7 @@ dji-2d:
   ts.on:  days
   lag:    2
   drop:   1
-  t:      2/250
+  t:      2/252
   nu0:    8.92
   theta:  1.01
   convo:  3
@@ -359,7 +359,7 @@ dji-3d:
   ts.on:  days
   lag:    3
   drop:   1
-  t:      3/250
+  t:      3/252
   nu0:    8.92
   theta:  1.01
   convo:  3
@@ -581,7 +581,7 @@ dji-12m:
   symbol: dji
   period: 12m
   ts.on:  days
-  lag:    250
+  lag:    252
   drop:   0
   t:      1
   nu0:    9.62
@@ -633,7 +633,7 @@ gold-1d:
   ts.on:  days
   lag:    1
   drop:   2
-  t:      1/250
+  t:      1/252
   nu0:    4.82
   theta:  2.21
   convo:  2
@@ -647,7 +647,7 @@ gold-2d:
   ts.on:  days
   lag:    2
   drop:   2
-  t:      2/250
+  t:      2/252
   nu0:    4.80
   theta:  2.16
   convo:  2
@@ -661,7 +661,7 @@ gold-3d:
   ts.on:  days
   lag:    3
   drop:   2
-  t:      3/250
+  t:      3/252
   nu0:    5.70
   theta:  2.06
   convo:  2
@@ -675,7 +675,7 @@ gold-4d:
   ts.on:  days
   lag:    4
   drop:   2
-  t:      4/250
+  t:      4/252
   nu0:    7.80
   theta:  1.76
   convo:  2
@@ -689,7 +689,7 @@ gold-5d:
   ts.on:  days
   lag:    5
   drop:   2
-  t:      5/250
+  t:      5/252
   nu0:    7.70
   theta:  1.76
   convo:  2
@@ -897,7 +897,7 @@ gold-12m:
   symbol: gold
   period: 12m
   ts.on:  days
-  lag:    250
+  lag:    252
   drop:   0
   t:      1
   nu0:    11.51
@@ -943,7 +943,7 @@ wti-1d:
   ts.on:  days
   lag:    1
   drop:   1
-  t:      1/250
+  t:      1/252
   nu0:    16.22
   theta:  3.42
   convo:  3
@@ -973,7 +973,7 @@ r10y-1d:
   ts.on:  days
   lag:    1
   drop:   0
-  t:      1/250
+  t:      1/252
   nu0:    2.22
   theta:  2.17
   convo:  3

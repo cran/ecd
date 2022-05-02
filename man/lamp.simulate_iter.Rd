@@ -4,10 +4,17 @@
 \alias{lamp.simulate_iter}
 \title{Simulate lambda process from stable distribution iteratively}
 \usage{
-lamp.simulate_iter(object, use.mc = 4, sim.length = 1000,
-  reset.cache = FALSE, drop = 10, keep.tau = 1,
-  plot.util = lamp.plot_sim6, cpu.temperature = 68,
-  cpu.temperature.util = NULL)
+lamp.simulate_iter(
+  object,
+  use.mc = 4,
+  sim.length = 1000,
+  reset.cache = FALSE,
+  drop = 10,
+  keep.tau = 1,
+  plot.util = lamp.plot_sim6,
+  cpu.temperature = 68,
+  cpu.temperature.util = NULL
+)
 }
 \arguments{
 \item{object}{an object of lamp class}

@@ -4,9 +4,18 @@
 \alias{ecd.polar}
 \title{Polar constructor of ecd class}
 \usage{
-ecd.polar(R = NaN, theta = NaN, sigma = 1, beta = 0, mu = 0,
-  cusp = 0, with.stats = TRUE, with.quantile = FALSE, bare.bone = FALSE,
-  verbose = FALSE)
+ecd.polar(
+  R = NaN,
+  theta = NaN,
+  sigma = 1,
+  beta = 0,
+  mu = 0,
+  cusp = 0,
+  with.stats = TRUE,
+  with.quantile = FALSE,
+  bare.bone = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{R}{numeric, the radius parameter. Default is \code{NaN}.}

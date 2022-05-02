@@ -4,8 +4,13 @@
 \alias{ecop.find_fixed_point_sd_by_lambda}
 \title{Utility to find the fixed point stdev when lambda is given}
 \usage{
-ecop.find_fixed_point_sd_by_lambda(fn_get_ld1, lambda, beta = 0,
-  otype = "c", verbose = FALSE)
+ecop.find_fixed_point_sd_by_lambda(
+  fn_get_ld1,
+  lambda,
+  beta = 0,
+  otype = "c",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{fn_get_ld1}{function, takes stdev, lambda, beta as input, return ld1 object

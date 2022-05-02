@@ -9,11 +9,9 @@ of standard cusp distribution.}
 \usage{
 ecd.cusp_std_moment(n)
 
-ecd.cusp_std_cf(t, mu = 0, sigma = 1, rel.tol = 1e-08,
-  show.warning = FALSE)
+ecd.cusp_std_cf(t, mu = 0, sigma = 1, rel.tol = 1e-08, show.warning = FALSE)
 
-ecd.cusp_std_mgf(t, mu = 0, sigma = 1, rel.tol = 1e-07,
-  show.warning = FALSE)
+ecd.cusp_std_mgf(t, mu = 0, sigma = 1, rel.tol = 1e-07, show.warning = FALSE)
 }
 \arguments{
 \item{n}{integer vector specifying the n-th moments}

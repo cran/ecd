@@ -98,10 +98,10 @@ ecd.data.ts <- function(ts, start.date="1950-01-01", end.date="2015-12-31",
     if (start.date=="") start.date <- min(index(ts))
     if (end.date=="") end.date <- max(index(ts))
     
-    if (class(start.date) == "Date") start.date <- as.character(start.date)
-    if (class(start.date) != "character") stop("start.date must be in ISO-date string or Date")
-    if (class(end.date) == "Date") end.date <- as.character(end.date)
-    if (class(end.date) != "character") stop("end.date must be in ISO-date string or Date")
+    if (is(start.date, "Date")) start.date <- as.character(start.date)
+    if (!is(start.date, "character")) stop("start.date must be in ISO-date string or Date")
+    if (is(end.date, "Date")) end.date <- as.character(end.date)
+    if (!is(end.date, "character")) stop("end.date must be in ISO-date string or Date")
     
     ts1 <- ts[paste(start.date, "/", end.date, sep="")]
     ep <- xts::endpoints(ts1, on=on, k=1)

@@ -5,8 +5,15 @@
 \alias{ecd.mu_D}
 \title{Incomplete MGF of ecd}
 \usage{
-ecd.imgf(object, x = -Inf, t = 1, minus1 = FALSE, unit.sigma = FALSE,
-  n.sigma = .ecd.mpfr.N.sigma, verbose = FALSE)
+ecd.imgf(
+  object,
+  x = -Inf,
+  t = 1,
+  minus1 = FALSE,
+  unit.sigma = FALSE,
+  n.sigma = .ecd.mpfr.N.sigma,
+  verbose = FALSE
+)
 
 ecd.mu_D(object)
 }

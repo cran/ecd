@@ -4,8 +4,15 @@
 \alias{ecd.fit_data}
 \title{Sample data fit}
 \usage{
-ecd.fit_data(symbol = "dji", iter = 1000, FIT = FALSE, EPS = FALSE,
-  conf_file = "conf/ecd-fit-conf.yml", eps_file = NULL, qa.fit = FALSE)
+ecd.fit_data(
+  symbol = "dji",
+  iter = 1000,
+  FIT = FALSE,
+  EPS = FALSE,
+  conf_file = "conf/ecd-fit-conf.yml",
+  eps_file = NULL,
+  qa.fit = FALSE
+)
 }
 \arguments{
 \item{symbol}{Character. The symbol of sample data. Default: dji.}

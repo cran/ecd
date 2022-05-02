@@ -13,7 +13,9 @@
 \alias{ecd.erfi}
 \alias{ecd.devel}
 \title{Wrapper to convert numeric to mpfr}
-\format{An object of class \code{mpfr} of length 1.}
+\format{
+An object of class \code{mpfr} of length 1.
+}
 \usage{
 ecd.mpfr(x, precBits = getOption("ecd.precBits"))
 

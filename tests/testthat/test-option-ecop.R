@@ -1,6 +1,4 @@
 
-suppressMessages(library(fOptions))
-
 context("Test on Option Pricing")
 
 eps <- 0.001 # default tolerance of error for real number

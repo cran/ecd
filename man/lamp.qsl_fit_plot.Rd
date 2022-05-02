@@ -4,8 +4,14 @@
 \alias{lamp.qsl_fit_plot}
 \title{Plot the fit to asset returns using quartic stable lambda distribution}
 \usage{
-lamp.qsl_fit_plot(key, debug = FALSE, plot.type = c("pdf", "log-pdf"),
-  qqplot.n = 1e+06, extdata_dir = NULL, filename = NULL)
+lamp.qsl_fit_plot(
+  key,
+  debug = FALSE,
+  plot.type = c("pdf", "log-pdf"),
+  qqplot.n = 1e+06,
+  extdata_dir = NULL,
+  filename = NULL
+)
 }
 \arguments{
 \item{key}{character, the key(s) to retrieve configuration for plot.

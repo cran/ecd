@@ -58,12 +58,11 @@
 	    precBits <- 120L
 	}
 	
-    c <- class(x)
-    if (c=="numeric") return(Rmpfr::mpfr(x, precBits))
-    if (c=="mpfr") return(x)
+    if (is(x,"numeric")) return(Rmpfr::mpfr(x, precBits))
+    if (is(x,"mpfr")) return(x)
     
     # the list is usually caused by mclapply (the apply family)
-    if (c=="list") return(new("mpfr", unlist(x)))
+    if (is(x,"list")) return(new("mpfr", unlist(x)))
     
     
     stop(paste("Unknown class to convert to mpfr:", c))
@@ -88,25 +87,25 @@ ecd.gamma <- function(s,x,na.stop=TRUE) ecld.gamma(s,x,na.stop)
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erf <- function(x) {
-    if (class(x)=="complex") return(RcppFaddeeva::erf(x))
+    if (is(x,"complex")) return(RcppFaddeeva::erf(x))
     Rmpfr::erf(x)
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erfc <- function(x) {
-    if (class(x)=="complex") return(RcppFaddeeva::erfc(x))
+    if (is(x,"complex")) return(RcppFaddeeva::erfc(x))
     Rmpfr::erfc(x)
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erfcx <- function(x) {
-    if (class(x)=="complex") return(RcppFaddeeva::erfcx(x))
+    if (is(x,"complex")) return(RcppFaddeeva::erfcx(x))
     Rmpfr::erfc(x)*exp(x^2)
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.dawson <- function(x) {
-    if (class(x)=="complex") return(RcppFaddeeva::Dawson(x))
+    if (is(x,"complex")) return(RcppFaddeeva::Dawson(x))
     one <- x*0.0 + 1 # this is to preserve the MPFR type
     y <- gsl::dawson(ecd.mp2f(x))
     return(y*one)
@@ -114,7 +113,7 @@ ecd.dawson <- function(x) {
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erfi <- function(x) {
-    if (class(x)=="complex") return(RcppFaddeeva::erfi(x))
+    if (is(x,"complex")) return(RcppFaddeeva::erfi(x))
     y <- ecd.dawson(x)
     return(y*exp(x^2)*2/sqrt(pi))
 }

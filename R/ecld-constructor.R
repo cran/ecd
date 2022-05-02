@@ -1,6 +1,6 @@
 #' Constructor of ecld class
 #' 
-#' Construct an ecld class by providing the required parameters.
+#' Construct an \code{\link{ecld-class}} by providing the required parameters.
 #' The default is the standard symmetric cusp distribution.
 #' The default also doesn't calculate any ecd extension.
 #' \code{ecld.from} allows you to pass the parameters from an existing ecd object.

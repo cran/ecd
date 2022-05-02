@@ -4,8 +4,15 @@
 \alias{ecld.ivol_ogf_star}
 \title{Calculate implied volatility using star OGF and small sigma formula}
 \usage{
-ecld.ivol_ogf_star(object, ki, epsilon = 0, otype = "c",
-  order.local = Inf, order.global = Inf, ignore.mu = FALSE)
+ecld.ivol_ogf_star(
+  object,
+  ki,
+  epsilon = 0,
+  otype = "c",
+  order.local = Inf,
+  order.global = Inf,
+  ignore.mu = FALSE
+)
 }
 \arguments{
 \item{object}{an object of ecld class}

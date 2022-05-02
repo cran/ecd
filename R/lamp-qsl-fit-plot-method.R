@@ -27,7 +27,7 @@ lamp.qsl_fit_plot <- function(key, debug=FALSE,
                                    plot.type=c("pdf", "log-pdf"), qqplot.n=1000000,
                                    extdata_dir=NULL, filename=NULL) {
     c <- NULL
-    if (class(key) == "character") {
+    if (is(key, "character")) {
         if(length(key) > 1) {
             dt <- list()
             for (k in key) {
@@ -57,7 +57,7 @@ lamp.qsl_fit_plot <- function(key, debug=FALSE,
     idx <- ecd.data.arr(symbol, on=c$ts.on, lag=c$lag, drop=c$drop,
                         start.date=start.date, end.date=end.date)
     kgq <- kqsl(t=t, nu0=nu0/100, theta=theta/100, convo=convo, beta.a=beta.a)
-    kll <- klihnlap(t=t, convo=convo, beta=beta.a*sqrt(t))
+    kll <- kstdlap(t=t, convo=convo, beta=beta.a*sqrt(t))
 
     x <- idx$x
     mean_x <- mean(x)

@@ -4,9 +4,19 @@
 \alias{ecd}
 \title{Constructor of ecd class}
 \usage{
-ecd(alpha = 0, gamma = 0, sigma = 1, beta = 0, mu = 0, cusp = 0,
-  lambda = 3, with.stats = TRUE, with.quantile = FALSE,
-  bare.bone = FALSE, verbose = FALSE)
+ecd(
+  alpha = 0,
+  gamma = 0,
+  sigma = 1,
+  beta = 0,
+  mu = 0,
+  cusp = 0,
+  lambda = 3,
+  with.stats = TRUE,
+  with.quantile = FALSE,
+  bare.bone = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{alpha}{numeric, the flatness parameter. Default: 0.}

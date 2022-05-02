@@ -4,8 +4,7 @@
 \alias{ecd.ccdf}
 \title{Complementary CDF of ecd}
 \usage{
-ecd.ccdf(object, x, to.x = Inf, piece.wise = FALSE, f = NULL,
-  verbose = FALSE)
+ecd.ccdf(object, x, to.x = Inf, piece.wise = FALSE, f = NULL, verbose = FALSE)
 }
 \arguments{
 \item{object}{An object of ecd class}

@@ -4,8 +4,15 @@
 \alias{ecd.df2ts}
 \title{Utility to standardize timeseries from data.frame to xts}
 \usage{
-ecd.df2ts(df, date_format = "\%m/\%d/\%Y", dt = "Date", col_in = "Close",
-  col_out = "Close", do.logr = TRUE, rnd.zero = 0.01)
+ecd.df2ts(
+  df,
+  date_format = "\%m/\%d/\%Y",
+  dt = "Date",
+  col_in = "Close",
+  col_out = "Close",
+  do.logr = TRUE,
+  rnd.zero = 0.01
+)
 }
 \arguments{
 \item{df}{Data.frame of the time serie}

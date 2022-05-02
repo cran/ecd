@@ -35,7 +35,7 @@
 {
     # read the conf data
     conf <- NULL
-    if (! is.null(conf_data) & class(conf_data)=="list") {
+    if (! is.null(conf_data) & is(conf_data,"list")) {
         conf <- conf_data
     } else {
         conf <- ecop.read_symbol_conf(key, conf_file)

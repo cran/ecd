@@ -6,8 +6,12 @@
 \alias{ecop.build_opt}
 \title{Constructor of ecop class by read conf for option sample data}
 \usage{
-ecop.from_symbol_conf(key, conf_file = "conf/ecop-fit-conf.yml",
-  conf_data = NULL, extdata_dir = NULL)
+ecop.from_symbol_conf(
+  key,
+  conf_file = "conf/ecop-fit-conf.yml",
+  conf_data = NULL,
+  extdata_dir = NULL
+)
 
 ecop.read_symbol_conf(key, conf_file = "conf/ecop-fit-conf.yml")
 

@@ -6,8 +6,7 @@
 \alias{ecop.bs_put_price}
 \title{Calculate option price from implied volatility in Black-Sholes model}
 \usage{
-ecop.bs_option_price(ivol, K, S, ttm, int_rate = 0, div_yield = 0,
-  otype = "c")
+ecop.bs_option_price(ivol, K, S, ttm, int_rate = 0, div_yield = 0, otype = "c")
 
 ecop.bs_call_price(ivol, K, S, ttm, int_rate = 0, div_yield = 0)
 

@@ -4,8 +4,14 @@
 \alias{ecd.uniroot}
 \title{Uniroot wrapper}
 \usage{
-ecd.uniroot(f, lower, upper, use.mpfr = FALSE,
-  tol = .Machine$double.eps^0.25, maxiter = 100)
+ecd.uniroot(
+  f,
+  lower,
+  upper,
+  use.mpfr = FALSE,
+  tol = .Machine$double.eps^0.25,
+  maxiter = 100
+)
 }
 \arguments{
 \item{f}{the function for which the root is sought.}

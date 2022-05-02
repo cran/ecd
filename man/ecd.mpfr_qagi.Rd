@@ -4,8 +4,15 @@
 \alias{ecd.mpfr_qagi}
 \title{Utility to integrate mpfr with infinity via qagi}
 \usage{
-ecd.mpfr_qagi(object, f, lower, upper, ...,
-  abs.tol = .Machine$double.eps^0.25, show.warning = TRUE)
+ecd.mpfr_qagi(
+  object,
+  f,
+  lower,
+  upper,
+  ...,
+  abs.tol = .Machine$double.eps^0.25,
+  show.warning = TRUE
+)
 }
 \arguments{
 \item{object}{an object of ecd class}

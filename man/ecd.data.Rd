@@ -8,13 +8,28 @@
 \usage{
 ecd.data(symbol = "dji")
 
-ecd.data.arr(symbol = "dji", start.date = "1950-01-01",
-  end.date = "2015-12-31", on = "days", lag = 1, drop = 0,
-  repeated = TRUE, cache = TRUE, do.kurtosis = FALSE)
+ecd.data.arr(
+  symbol = "dji",
+  start.date = "1950-01-01",
+  end.date = "2015-12-31",
+  on = "days",
+  lag = 1,
+  drop = 0,
+  repeated = TRUE,
+  cache = TRUE,
+  do.kurtosis = FALSE
+)
 
-ecd.data.ts(ts, start.date = "1950-01-01", end.date = "2015-12-31",
-  on = "days", lag = 1, drop = 0, repeated = TRUE,
-  do.kurtosis = FALSE)
+ecd.data.ts(
+  ts,
+  start.date = "1950-01-01",
+  end.date = "2015-12-31",
+  on = "days",
+  lag = 1,
+  drop = 0,
+  repeated = TRUE,
+  do.kurtosis = FALSE
+)
 }
 \arguments{
 \item{symbol}{character, the symbol of the time series. Default: dji}

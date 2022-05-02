@@ -1,11 +1,14 @@
 #' Stable lambda distribution
 #'
-#' Implements some aspects of the stable lambda (SL) distribution
+#' Implements the stable lambda distribution (SLD) and the quartic stable lambda distribution (QSLD).
+#' Be aware of the performance concerns:
+#' (a) The cumulative density function is implemented by direct integration over the density.
+#' (b) The quantile function is implemented by root finding on cumulative density function.
 #'
 #' @param n numeric, number of observations.
 #' @param x numeric, vector of responses.
+#' @param q numeric, vector of quantiles.
 #' @param s numeric, vector of responses for characteristic function.
-#' @param nu numeric, vector of nu in the pdf integrand, starting from 0 (not nu0).
 #' @param t numeric, the time parameter, where the variance is t, default is 1.
 #' @param nu0 numeric, the location parameter, default is 0.
 #' @param theta numeric, the scale parameter, default is 1.
@@ -14,8 +17,8 @@
 #' @param mu numeric, the location parameter, default is 0.
 #' @param lambda numeric, the shape parameter, default is 4.
 #' @param method character, method of characteristic function (CF) calculation. Default is "a".
-#'               Method a uses cflihnlap x dstablecnt.
-#'               Method b uses dlihnlap x cfstablecnt.
+#'               Method a uses cfstdlap x dstablecnt.
+#'               Method b uses dstdlap x cfstablecnt.
 #'               Method c uses direct integration on PDF up to 50 stdev.
 #'               They should yield the same result.
 #'
@@ -28,7 +31,7 @@
 #'         k* returns the first 4 cumulants, skewness, and kurtosis,
 #'         cf* returns the characteristic function.
 #'
-#' @keywords Modified-Lambda
+#' @keywords stable-Lambda
 #'
 #' @author Stephen H-T. Lihn
 #'
@@ -37,34 +40,65 @@
 #'
 #' @export rqsl
 #' @export dqsl
+#' @export pqsl
+#' @export qqsl
 #' @export cfqsl
 #' @export kqsl
 #' @export rsl
 #' @export dsl
+#' @export psl
+#' @export qsl
 #' @export cfsl
 #' @export ksl
-#' @export qsl_variance_analytic
-#' @export qsl_kurtosis_analytic
-#' @export qsl_skewness_analytic
-#' @export qsl_std_pdf0_analytic
-#' @export qsl_pdf_integrand_analytic
+#'
+#' @section Details:
+#'   The stable lambda distribution is the stationary distribution for financial asset returns.
+#'   It is a product of the stable count distribution and the Lihn-Laplace process.
+#'   The density function is defined as \deqn{
+#'     P_{\Lambda}^{\left(m\right)}\left(x;t,\nu_{0},\theta,\beta_{a},\mu\right)
+#'     \equiv\int_{\nu_{0}}^{\infty} \frac{1}{\nu}\,
+#'     f_{\mathit{L}}^{\left(m\right)}\left(\frac{x-\mu}{\nu};t,\beta_{a}\sqrt{t}\right)\,
+#'     \mathit{N}_\alpha\left(\nu;\nu_{0},\theta\right)d\nu
+#'   }{
+#'     P_\Lambda^(m) (x;t,\nu_0,\theta,\beta_a,\mu)
+#'     = integrate_\nu_0^\infty 1/\nu
+#'     f_L^(m)((x-\mu)/\nu; t,\beta_a sqrt(t))
+#'     N_\alpha(\nu; \nu_0,\theta) d\nu
+#'   }
+#'   where
+#'   \eqn{f_L^{(m)}(.)} is the Lihn-Laplace distribution and
+#'   \eqn{N_\alpha(.)} is the quartic stable count distribution.
+#'   \eqn{t} is the time or sampling period,
+#'   \eqn{\alpha} is the stability index which is \eqn{2/\lambda},
+#'   \eqn{\nu_0} is the floor volatility parameter,
+#'   \eqn{\theta} is the volatility scale parameter,
+#'   \eqn{\beta_a} is the annualized asymmetric parameter,
+#'   \eqn{\mu} is the location parameter.
+#'   \cr
+#'   The quartic stable lambda distribution (QSLD) is a specialized distribution with \eqn{\lambda=4} aka \eqn{\alpha=0.5}.
+#'   The PDF integrand has closed form, and all the moments have closed forms.
+#'   Many financial asset returns can be fitted by QSLD precisely up to 4 standard deviations.
+#'
+#' @seealso
+#'   \code{\link{dstablecnt}} for \eqn{N_\alpha(.)},
+#'   and \code{\link{dstdlap}} for \eqn{f_L^{(m)}(.)}.
+#'
+#' @references
+#'   For more detail, see Section 8.2 of
+#'   Stephen Lihn (2017).
+#'   \emph{A Theory of Asset Return and Volatility
+#'   under Stable Law and Stable Lambda Distribution}.
+#'   SSRN: 3046732, \url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3046732}.
+#'
+#' @examples
+#'   # generate the quartic pdf for SPX 1-day distribution
+#'   x <- c(-0.1, 0.1, by=0.001)
+#'   pdf <- dqsl(x, t=1/250, nu0=6.92/100, theta=1.17/100, convo=2, beta=-1.31)
 #'
 ### <======================================================================>
-rqsl <- function(n, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0) {
-    rsl(n, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=4)
-}
-### <---------------------------------------------------------------------->
-#' @rdname rqsl
-rsl <- function(n, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
-    L <- rlihnlap(n, t=t, convo=convo, beta=beta.a*sqrt(t))
-    N <- rstablecnt(n, alpha=2/lambda, nu0=nu0, theta=theta)
-    return(L*N+mu)
-}
-### <---------------------------------------------------------------------->
-#' @rdname rqsl
 dsl <- function(x, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
     integrand_xp <- function(x, nu) {
-        L <- dlihnlap((x-mu)/(nu+nu0), t=t, convo=convo, beta=beta.a*sqrt(t))
+        L <- dstdlap((x-mu)/(nu+nu0), t=t, convo=convo, beta=beta.a*sqrt(t))
         N <- dstablecnt(nu, alpha=2/lambda, nu0=0, theta=theta)
         v <- N*L/(nu+nu0)
         return(ifelse(is.na(v), 0, v)) # bypass the singular points
@@ -72,7 +106,8 @@ dsl <- function(x, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
 
     pdf <- function(x) {
         f <- function(nu) integrand_xp(x, nu)
-        S <- theta*sqrt(t) # scale
+        S <- sqrt(t*((nu0+6*theta)^2 + 24*theta^2)) # scale
+
         Va <- integrate(f, lower=0.000001*S, upper=0.001*S)$value # very small and problematic
         V0 <- integrate(f, lower=0.001*S, upper=0.1*S)$value
         V1 <- integrate(f, lower=0.1*S, upper=1*S)$value
@@ -87,19 +122,87 @@ dsl <- function(x, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
     return(V)
 }
 ### <---------------------------------------------------------------------->
-#' @rdname rqsl
+#' @rdname dsl
 dqsl <- function(x, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0) {
     dsl(x, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=4)
 }
 ### <---------------------------------------------------------------------->
-#' @rdname rqsl
+#' @rdname dsl
+rqsl <- function(n, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0) {
+    rsl(n, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=4)
+}
+### <---------------------------------------------------------------------->
+#' @rdname dsl
+rsl <- function(n, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
+    L <- rstdlap(n, t=t, convo=convo, beta=beta.a*sqrt(t))
+    N <- rstablecnt(n, alpha=2/lambda, nu0=nu0, theta=theta)
+    return(L*N+mu)
+}
+### <---------------------------------------------------------------------->
+#' @rdname dsl
+pqsl <- function(x, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0) {
+    psl(x, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=4)
+}
+### <---------------------------------------------------------------------->
+#' @rdname dsl
+psl <- function(x, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
+    if (length(x)>1) {
+        ld <- ecld(4)
+        g <- function(x) psl(x, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=lambda)
+        v <- ecd.mcsapply(ld, x, g)
+        return(v)
+    }
+
+    S <- sqrt(t*((nu0+6*theta)^2 + 24*theta^2)) # scale
+    xmax = 50*S
+    f <- function(x) dsl(x, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=lambda)
+    if (x <= mu) {
+        if (x < -xmax) return(0)
+        v <- integrate(f, lower=-xmax, upper=x)
+        return(v$value)
+    }
+    v1 <- integrate(f, lower=-xmax, upper=mu)
+    v2 <- integrate(f, lower=mu, upper=x)
+    return(v1$value + v2$value)
+}
+### <---------------------------------------------------------------------->
+#' @rdname dsl
+qqsl <- function(q, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0) {
+    qsl(q, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=4)
+}
+### <---------------------------------------------------------------------->
+#' @rdname dsl
+qsl <- function(q, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
+    if (length(q)>1) {
+        ld <- ecld(2)
+        g <- function(q) qsl(q, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=lambda)
+        v <- ecd.mcsapply(ld, q, g)
+        return(v)
+    }
+    if (q > 1 | q < 0) stop("quantile out of range")
+    if (q == 1) return(Inf)
+    if (q == 0) return(-Inf)
+
+    f <- function(x) psl(x, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=lambda)-q
+
+    # check out of bound condition
+    S <- sqrt(t*((nu0+6*theta)^2 + 24*theta^2)) # scale
+    xmax = 50*S
+    if (f(mu-xmax) >= 0) return(-Inf)
+    if (f(mu+xmax) <= 0) return(Inf)
+
+    r <- uniroot(f, lower=mu-xmax, upper=mu+xmax)
+    return(r$root)
+}
+### <---------------------------------------------------------------------->
+#' @rdname dsl
 kqsl <- function(t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0) {
     ksl(t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=4)
 }
 ### <---------------------------------------------------------------------->
-#' @rdname rqsl
+#' @rdname dsl
 ksl <- function(t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
-    kL <- klihnlap(t=t, convo=convo, beta=beta.a*sqrt(t))
+    kL <- kstdlap(t=t, convo=convo, beta=beta.a*sqrt(t))
     kN <- kstablecnt(alpha=2/lambda, nu0=nu0, theta=theta)
     mC <- k2mnt(kN)*k2mnt(kL)
     kC <- mnt2k(mC)
@@ -112,79 +215,12 @@ ksl <- function(t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4) {
     return(k)
 }
 ### <---------------------------------------------------------------------->
-#' @rdname rqsl
-qsl_kurtosis_analytic <- function(t=1, nu0=0, theta=1, convo=1, beta.a=0) {
-    if (beta.a != 0) stop("qsl_kurtosis_analytic does not support non-zero beta")
-    m <- convo
-    beta <- beta.a*sqrt(t)
-    nu1 <- nu0+6*theta
-    A <- nu1^4 + (144+96*m)*theta^2*nu1^2 + 768*(1+m)*theta^3*nu1 + (4032+3456*m)*theta^4
-    B <- (nu1^2+24*theta^2)^2
-    return(3+(3/m)*A/B)
-}
-### <---------------------------------------------------------------------->
-#' @rdname rqsl
-qsl_skewness_analytic <- function(t=1, nu0=0, theta=1, convo=1, beta.a=0) {
-    m <- convo
-    beta <- beta.a*sqrt(t)
-    nu1 <- nu0+6*theta
-
-    P <- 144*beta^2 + 432 + 144*m*(2+beta^2)
-    Q <- 192*beta^2*m^2 + 576*(2+beta^2)*m + 384*beta^2 + 1152
-
-    A <- 2*(3+beta^2)*nu1^3 + P*theta^2*nu1 + Q*theta^3
-    B <- (2+beta^2)*nu1^2 + 24*theta^2*(2+beta^2*(1+m))
-    # print(paste(A,B^(3/2))) # debug this complex beast!
-    return(beta/sqrt(m)*A/B^(3/2))
-}
-### <---------------------------------------------------------------------->
-#' @rdname rqsl
-qsl_variance_analytic <- function(t=1, nu0=0, theta=1, convo=1, beta.a=0) {
-    m <- convo
-    beta <- beta.a*sqrt(t)
-    nu1 <- nu0+6*theta
-
-    var_annl <- (nu1^2+24*theta^2) + m*beta^2/(2+beta^2)*(24*theta^2)
-    return(var_annl*t)
-}
-### <---------------------------------------------------------------------->
-#' @rdname rqsl
-qsl_std_pdf0_analytic <- function(t=1, nu0=0, theta=1, convo=1, beta.a=0) {
-    if (beta.a != 0) stop("qsl_std_pdf0_analytic does not support non-zero beta")
-
-    if (convo > 100) convo <- ecd.mp1*convo # to ensure gamma function works
-
-    m <- convo
-    C <- gamma(m-1/2)*sqrt(2*m)/gamma(m)/8/pi
-    n <- nu0/theta
-    pdf0 <- 2*sqrt(pi)-pi*sqrt(n)*exp(n/4)*ecd.erfc(sqrt(n/4))
-    var_annl <- (n+6)^2+24
-    ecd.mp2f(C*pdf0*sqrt(var_annl)) # render numeric always
-}
-### <---------------------------------------------------------------------->
-#' @rdname rqsl
-qsl_pdf_integrand_analytic <- function(x, nu, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0) {
-    if (convo > 100) convo <- ecd.mp1*convo # to ensure gamma function works
-
-    m <- convo
-    beta <- beta.a*sqrt(t)
-    B0 <- sqrt(1+beta^2/4)
-    sm <- sqrt(t/m/(2+beta^2))
-    w <- B0*(x-mu)/sm/(nu+nu0)
-
-    C <- 4*pi*gamma(m)*sm*theta^(3/2)
-    A <- sqrt(nu)/(nu+nu0)
-    K <- abs(w/2/B0^2)^(m-1/2) * besselK(abs(w),m-1/2)
-    B <- exp(w*beta/2/B0 - nu/4/theta)
-    ecd.mp2f(1/C*A*K*B) # render numeric always
-}
-### <---------------------------------------------------------------------->
-#' @rdname rqsl
+#' @rdname dsl
 cfqsl <- function(s, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, method="a") {
     cfsl(s, t=t, nu0=nu0, theta=theta, convo=convo, beta.a=beta.a, mu=mu, lambda=4, method=method)
 }
 ### <---------------------------------------------------------------------->
-#' @rdname rqsl
+#' @rdname dsl
 cfsl <- function(s, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4, method="a") {
     # TODO the upper bounds of the integrals are all based on quartic distribution
     # User needs to be careful when extending to other lambda's
@@ -193,7 +229,7 @@ cfsl <- function(s, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4, meth
         N <- 100000
         nu <- nu0 + seq(0, 100, length.out=N)*theta
         M <- exp(1i*mu*s)
-        L <- cflihnlap(s*nu, t=t, convo=convo, beta=beta.a*sqrt(t))
+        L <- cfstdlap(s*nu, t=t, convo=convo, beta=beta.a*sqrt(t))
         N <- dstablecnt(nu, alpha=2/lambda, nu0=nu0, theta=theta)
         dnu <- nu[2]-nu[1]
         return(M*sum(L*N)*dnu)
@@ -203,7 +239,7 @@ cfsl <- function(s, t=1, nu0=0, theta=1, convo=1, beta.a=0, mu=0, lambda=4, meth
         x <- seq(-50, 50, length.out=N+1)*sqrt(t)
         dx <- x[2]-x[1]
         M <- exp(1i*mu*s)
-        L <- dlihnlap(x, t=t, convo=convo, beta=beta.a*sqrt(t))
+        L <- dstdlap(x, t=t, convo=convo, beta=beta.a*sqrt(t))
         N <- cfstablecnt(s*x, alpha=2/lambda, nu0=nu0, theta=theta)
         return(M*sum(L*N)*dx)
     }

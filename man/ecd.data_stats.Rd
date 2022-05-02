@@ -4,8 +4,14 @@
 \alias{ecd.data_stats}
 \title{Statistics and histogram on log returns}
 \usage{
-ecd.data_stats(ts = "dji", breaks = 20, merge_tails = c(0, 0),
-  with.tail = FALSE, tail.N1 = 7, tail.N2 = 5)
+ecd.data_stats(
+  ts = "dji",
+  breaks = 20,
+  merge_tails = c(0, 0),
+  with.tail = FALSE,
+  tail.N1 = 7,
+  tail.N2 = 5
+)
 }
 \arguments{
 \item{ts}{can be either a symbol of sample data,

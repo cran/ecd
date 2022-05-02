@@ -4,9 +4,19 @@
 \alias{lamp}
 \title{Constructor of lamp class}
 \usage{
-lamp(lambda = NaN, T.inf = 86400 * 1000, rnd.n = 1e+06, alpha = NaN,
-  beta = 0, rnd.walk = 1, sd = NaN, sd.method = 0, N.lower = 0,
-  N.upper = 1000, file = character(0))
+lamp(
+  lambda = NaN,
+  T.inf = 86400 * 1000,
+  rnd.n = 1e+06,
+  alpha = NaN,
+  beta = 0,
+  rnd.walk = 1,
+  sd = NaN,
+  sd.method = 0,
+  N.lower = 0,
+  N.upper = 1000,
+  file = character(0)
+)
 }
 \arguments{
 \item{lambda}{numeric, the lambda parameter. Must be positive. Default is NaN.}

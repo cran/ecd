@@ -4,8 +4,17 @@
 \alias{ecop.bs_implied_volatility}
 \title{Implied volatility of Black-Sholes model}
 \usage{
-ecop.bs_implied_volatility(V, K, S, ttm, int_rate = 0, div_yield = 0,
-  otype = "c", stop.on.na = FALSE, use.mc = TRUE)
+ecop.bs_implied_volatility(
+  V,
+  K,
+  S,
+  ttm,
+  int_rate = 0,
+  div_yield = 0,
+  otype = "c",
+  stop.on.na = FALSE,
+  use.mc = TRUE
+)
 }
 \arguments{
 \item{V}{numeric vector of option prices}
