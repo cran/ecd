@@ -17,7 +17,7 @@ setMethod("ecdattr<-", "ecdb", function(object, value){
     }
 
     # handle ecdattr object
-    if (class(value) != "ecdattr") {
+    if (! is(value, "ecdattr")) {
         stop("value must be a list or vector of ecdattr objects")
     }
 

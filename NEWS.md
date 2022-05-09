@@ -1,6 +1,8 @@
-# ecd 0.9.3
+# ecd 0.9.2.3
 
-2020-05-10: Removed fOption dependency. The research from 2017-2022 revealed that the core structure of the lambda distribution is a volatility kernel based on the Stable Count Distribution, which is documented formally in Wikipedia:
+2022-05-10: Removed RcppFaddeeva dependency.
+
+2022-05-02: Removed fOption dependency. The research from 2017-2022 revealed that the core structure of the lambda distribution is a volatility kernel based on the Stable Count Distribution, which is documented formally in Wikipedia:
 https://en.wikipedia.org/wiki/Stable_count_distribution
 
 # ecd 0.8.3

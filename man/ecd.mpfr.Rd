@@ -56,11 +56,11 @@ Convert numeric to mpfr for ecd calculations.
 \code{ecd.mp1} is the constant 1 wrapped in mpfr class.
 \code{ecd.mppi} is the function to obtain pi from Rmpfr with an optional precision. This is used to implement \code{ecd.erfq}.
 \code{ecd.gamma} is a wrapper on \code{ecld.gamma}, which is the incomplete gamma function.
-\code{ecd.erf} is a wrapper on \code{Rmpfr::erf}; or \code{RcppFaddeeva::erf} when it's complex.
-\code{ecd.erfcx} is a wrapper on \code{Rmpfr::erfcx}; or \code{RcppFaddeeva::erfcx} when it's complex..
-\code{ecd.erfc} is a wrapper on \code{Rmpfr::erfc}; or \code{RcppFaddeeva::erfc} when it's complex. This is used to implement \code{ecd.erfq}.
-\code{ecd.dawson} is a wrapper on \code{gsl::dawson}; or \code{RcppFaddeeva::Dawson} when it's complex. Dawson function is used to implement \code{ecd.erfq}.
-\code{ecd.erfi} is the imaginary scaled error function, which is implemented through \code{ecd.dawson}. Or \code{RcppFaddeeva::erfi} when it's complex.
+\code{ecd.erf} is a wrapper on \code{Rmpfr::erf}.
+\code{ecd.erfcx} is a wrapper on \code{Rmpfr::erfcx}.
+\code{ecd.erfc} is a wrapper on \code{Rmpfr::erfc}. This is used to implement \code{ecd.erfq}.
+\code{ecd.dawson} is a wrapper on \code{gsl::dawson}. Dawson function is used to implement \code{ecd.erfq}.
+\code{ecd.erfi} is the imaginary scaled error function, which is implemented through \code{ecd.dawson}.
 \code{ecd.devel} is a developer tool to size down intensive mpfr tests for CRAN. Set \code{ecd_devel} in R options or OS env to change its value.
 }
 \examples{

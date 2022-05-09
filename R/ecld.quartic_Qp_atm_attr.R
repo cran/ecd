@@ -36,7 +36,7 @@
 ### <======================================================================>
 "ecld.quartic_Qp_atm_attr" <- function(df) {
     
-    if (class(df) != "data.frame") stop("Error: expect df to be a data.frame")
+    if (! is(df, "data.frame")) stop("Error: expect df to be a data.frame")
     if (nrow(df) != 1) {
         dfl <- split(df, 1:nrow(df))
         df2 <- do.call("rbind", parallel::mclapply(dfl, ecld.quartic_Qp_atm_attr))

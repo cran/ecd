@@ -16,7 +16,7 @@
 #'
 ### <======================================================================>
 ecdattr.enrich <- function(p) {
-    if (class(p) != "ecdattr") {
+    if (! is(p, "ecdattr")) {
         stop(paste("pair is not a ecdattr:", str(p)))
     }
     

@@ -86,7 +86,7 @@
              "beta=", ecd.mp2f(beta), "mu=", ecd.mp2f(mu)
             ))
     }
-    use.mpfr <- ifelse(class(sum)=="mpfr", TRUE, FALSE)
+    use.mpfr <- ifelse(is(sum, "mpfr"), TRUE, FALSE)
 
     if (use.mpfr) {
         sigma <- ecd.mp1 * sigma
@@ -146,7 +146,7 @@
                         with.ecd = FALSE, with.mu_D = FALSE,
                         with.RN = FALSE, verbose=FALSE)
 {
-    if (class(object) != "ecd") {
+    if (! is(object, "ecd")) {
         stop("Must come from an ecd object")
     }
     if (object@alpha != 0 | object@gamma != 0) {
@@ -162,7 +162,7 @@
 #' @rdname ecld
 "ecld.validate" <- function(object, sged.allowed=FALSE, sged.only=FALSE)
 {
-    if (class(object) != "ecld") {
+    if (! is(object, "ecld")) {
         stop(paste("Object must be an ecld object, found:", class(object)))
     }
     if (sged.only) {

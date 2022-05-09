@@ -41,7 +41,7 @@ lamp.qsl_fit_plot <- function(key, debug=FALSE,
     }
     else c <- key # else we assume period contains config
 
-    if (class(c) != "data.frame") stop("config is not a data frame")
+    if (! is(c, "data.frame")) stop("config is not a data frame")
     if (debug) print(c)
     if (NROW(c) != 1) stop("config is not a single-row data frame")
 

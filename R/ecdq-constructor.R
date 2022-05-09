@@ -26,7 +26,7 @@
 {
     call <- match.call()
 
-    if(class(ecd) != "ecd"){
+    if(! is(ecd, "ecd")){
       stop("Parameter 'ecd' must be an ecd object!\n")
     }
     if (length(ecd@stats)==0) {

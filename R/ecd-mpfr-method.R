@@ -4,11 +4,11 @@
 #' \code{ecd.mp1} is the constant 1 wrapped in mpfr class.
 #' \code{ecd.mppi} is the function to obtain pi from Rmpfr with an optional precision. This is used to implement \code{ecd.erfq}.
 #' \code{ecd.gamma} is a wrapper on \code{ecld.gamma}, which is the incomplete gamma function.
-#' \code{ecd.erf} is a wrapper on \code{Rmpfr::erf}; or \code{RcppFaddeeva::erf} when it's complex.
-#' \code{ecd.erfcx} is a wrapper on \code{Rmpfr::erfcx}; or \code{RcppFaddeeva::erfcx} when it's complex..
-#' \code{ecd.erfc} is a wrapper on \code{Rmpfr::erfc}; or \code{RcppFaddeeva::erfc} when it's complex. This is used to implement \code{ecd.erfq}.
-#' \code{ecd.dawson} is a wrapper on \code{gsl::dawson}; or \code{RcppFaddeeva::Dawson} when it's complex. Dawson function is used to implement \code{ecd.erfq}.
-#' \code{ecd.erfi} is the imaginary scaled error function, which is implemented through \code{ecd.dawson}. Or \code{RcppFaddeeva::erfi} when it's complex.
+#' \code{ecd.erf} is a wrapper on \code{Rmpfr::erf}.
+#' \code{ecd.erfcx} is a wrapper on \code{Rmpfr::erfcx}.
+#' \code{ecd.erfc} is a wrapper on \code{Rmpfr::erfc}. This is used to implement \code{ecd.erfq}.
+#' \code{ecd.dawson} is a wrapper on \code{gsl::dawson}. Dawson function is used to implement \code{ecd.erfq}.
+#' \code{ecd.erfi} is the imaginary scaled error function, which is implemented through \code{ecd.dawson}.
 #' \code{ecd.devel} is a developer tool to size down intensive mpfr tests for CRAN. Set \code{ecd_devel} in R options or OS env to change its value.
 #'
 #' @param x a numeric vector or list. If \code{x} is mpfr class,
@@ -38,17 +38,12 @@
 #' @importFrom Rmpfr erf
 #' @importClassesFrom Rmpfr mpfr
 #' @importFrom gsl dawson
-#' @importFrom RcppFaddeeva erfc
-#' @importFrom RcppFaddeeva erfcx
-#' @importFrom RcppFaddeeva erfi
-#' @importFrom RcppFaddeeva Dawson
 #'
 #' @examples
 #' x <- ecd.mpfr(1)
 #' y <- ecd.mpfr(c(1,2,3))
 #' z <- ecd.mp1
 #' p <- ecd.mppi()
-### importFrom RcppFaddeeva erf # this creates warning from R CMD check
 ### <======================================================================>
 "ecd.mpfr" <- function(x, precBits=getOption("ecd.precBits"))
 {
@@ -87,25 +82,25 @@ ecd.gamma <- function(s,x,na.stop=TRUE) ecld.gamma(s,x,na.stop)
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erf <- function(x) {
-    if (is(x,"complex")) return(RcppFaddeeva::erf(x))
+    if (is(x,"complex")) stop("unable to handle complex input, RcppFaddeeva no longer available")
     Rmpfr::erf(x)
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erfc <- function(x) {
-    if (is(x,"complex")) return(RcppFaddeeva::erfc(x))
+    if (is(x,"complex")) stop("unable to handle complex input, RcppFaddeeva no longer available")
     Rmpfr::erfc(x)
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erfcx <- function(x) {
-    if (is(x,"complex")) return(RcppFaddeeva::erfcx(x))
+    if (is(x,"complex")) stop("unable to handle complex input, RcppFaddeeva no longer available")
     Rmpfr::erfc(x)*exp(x^2)
 }
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.dawson <- function(x) {
-    if (is(x,"complex")) return(RcppFaddeeva::Dawson(x))
+    if (is(x,"complex")) stop("unable to handle complex input, RcppFaddeeva no longer available")
     one <- x*0.0 + 1 # this is to preserve the MPFR type
     y <- gsl::dawson(ecd.mp2f(x))
     return(y*one)
@@ -113,7 +108,7 @@ ecd.dawson <- function(x) {
 ### <---------------------------------------------------------------------->
 #' @rdname ecd.mpfr
 ecd.erfi <- function(x) {
-    if (is(x,"complex")) return(RcppFaddeeva::erfi(x))
+    if (is(x,"complex")) stop("unable to handle complex input, RcppFaddeeva no longer available")
     y <- ecd.dawson(x)
     return(y*exp(x^2)*2/sqrt(pi))
 }
